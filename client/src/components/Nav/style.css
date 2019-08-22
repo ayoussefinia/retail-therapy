@@ -31,7 +31,7 @@ display: inline-block;
   width: 25%;
   border: 1px solid black;
   height: 100%;
-  display: inline-block;
+  display: flex;
 }
 
 .search-bar {
@@ -83,6 +83,23 @@ display: inline-block;
   border: 1px solid white;
   float: right;
 }
+.ntr-left {
+  width: 50%;
+  height: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+.ntr-right {
+  width: 50%;
+  height: 100%;
+
+  display: inline-block;
+}
+.cart {
+  color: white;
+} 
 @media (max-width: 600px) {
   .top-line{
     color: white;

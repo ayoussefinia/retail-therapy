@@ -3,10 +3,11 @@ const db = require("../models");
 // Defining methods for the booksController
 module.exports = {
   findAll: function(req, res) {
-    db.Book
-      .find(req.query)
+    console.log("made it into find all")
+    db.Product
+      .find({})
       .sort({ date: -1 })
-      .then(dbModel => res.json(dbModel))
+      .then(dbProducts => res.json(dbProducts))
       .catch(err => res.status(422).json(err));
   },
   findById: function(req, res) {
