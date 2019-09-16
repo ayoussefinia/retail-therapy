@@ -4,6 +4,7 @@ const productsController = require("../../controllers/productsController");
 // Matches with "/api/books"
 router.route("/")
   .get(productsController.findAll)
+  .post(productsController.create)
   // .post(booksController.create);
 
 // Matches with "/api/books/:id"

@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Store from "./pages/Store";
+import AddProduct from "./pages/AddProduct";
 
 // import Detail from "./pages/Detail";
 import NoMatch from "./pages/NoMatch";
@@ -13,6 +14,7 @@ function App() {
         <Nav />
         <Switch>
           <Route exact path="/" component={Store} />
+          <Route exact path="/addProduct" component={AddProduct} />
         
           {/* <Route exact path="/books" component={Books} />
           <Route exact path="/books/:id" component={Detail} /> */}

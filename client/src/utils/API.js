@@ -5,6 +5,9 @@ export default {
   getProducts: function() {
     return axios.get("/api/products");
   },
+  postProduct: function(productData) {
+    return axios.post("/api/products", productData)
+  }
   // // Gets the book with the given id
   // getBook: function(id) {
   //   return axios.get("/api/books/" + id);
