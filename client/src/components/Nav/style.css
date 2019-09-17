@@ -100,6 +100,10 @@ display: inline-block;
 .cart {
   color: white;
 } 
+
+.icon:hover {
+  cursor: pointer;
+}
 @media (max-width: 600px) {
   .top-line{
     color: white;

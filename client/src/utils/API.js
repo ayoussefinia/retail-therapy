@@ -7,6 +7,10 @@ export default {
   },
   postProduct: function(productData) {
     return axios.post("/api/products", productData)
+  },
+  getProduct: function(id) {
+    console.log(id)
+    return axios.get("/api/products/"+id)
   }
   // // Gets the book with the given id
   // getBook: function(id) {

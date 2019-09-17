@@ -19,11 +19,11 @@ function Nav() {
         </div>
         <div className="navbar-top-middle"><input className="form-control search-bar"/><button className="search-button">
         {/* <FontAwesome name="search" size="1x" className="search-glass" /> */}
-        <FontAwesomeIcon icon={faSearch} />
+        <FontAwesomeIcon icon={faSearch} className='icon' />
         </button></div>
         <div className="navbar-top-right">
         <div className="ntr-left">
-        <FontAwesomeIcon icon={faShoppingCart} className="cart" size="2x"/>
+        <FontAwesomeIcon icon={faShoppingCart} className="cart icon" size="2x"/>
         </div>
         <div className="ntr-right">
         <nav className="navbar navbar-dark">

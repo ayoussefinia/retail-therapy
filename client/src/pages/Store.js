@@ -1,16 +1,43 @@
-import React, { Component } from "react";
+import React, { Component} from "react";
+
+import { Redirect } from 'react-router-dom';
 import API from "../utils/API";
 import {Row, Col, Container} from "../components/Grid";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCartPlus } from '@fortawesome/free-solid-svg-icons';
+import { faCartPlus, faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
+import '../components/Nav/style.css';
 class Products extends Component {
   state = {
-    products: []
+    products: [],
+    editClicked: false,
+    properties: {}
     // title: "",
     // author: "",
     // synopsis: ""
   };
 
+  divStyles = {
+    display: 'flex',
+    justifyContent: 'center',
+    marginTop: '1rem'
+  }
+  descStyles = {
+    height: '50%',
+    width: '100%',
+    // overflowY: 'scroll'
+  }
+
+  cardStyles = {
+    width: "18rem",
+    height: '45vh'
+  }
+
+  iconDiv = {
+    display: 'flex',
+    justifyContent: 'space-around'
+  }
+
+  
   componentDidMount() {
     this.loadProducts();
   }
@@ -25,7 +52,43 @@ class Products extends Component {
       .catch(err => console.log(err));
   };
 
+// getProduct = (id) => {
+//   API.getProduct(id).then(function (res) { console.log(res) });
+// }
 
+// getId = (event)  => {
+//   console.log('inside get id')
+//   console.log(event.target.getAttribute('data-id'));
+
+//   return id;
+// }
+
+editProduct = (event) => {
+  
+ 
+  let id = ''
+  if (event.target.getAttribute('data-id')) {
+    id = event.target.getAttribute('data-id')
+  } else {
+    id = event.target.parentElement.getAttribute('data-id');
+  }
+
+  API.getProduct(id).then((res) => { 
+    
+    // <Redirect to={{
+    //   pathname: '/editProduct',
+    //   state: res.data
+    //   }}
+    // />
+    this.setState({
+      editClicked: true,
+      properties: res.data
+    })
+    console.log(res.data) });
+    // window.location.href = '/editProduct'
+
+    // return <Redirect to='/addProduct'/>
+}
 
   // handleInputChange = event => {
   //   const { name, value } = event.target;
@@ -49,44 +112,49 @@ class Products extends Component {
 
   render() {
     return (
+      this.state.editClicked ? 
+        <Redirect to={{
+          pathname: '/editProduct',
+          state: this.state.properties
+        }}/> : 
    
       <div className="row">
         {this.state.products.map(product => {
           
           return (
-          <div className="col-lg-3" style={{margin: "3rem"}}> 
-          <div className="card text-white bg-dark" style={{width: "18rem"}}>
-            <img className="card-img-top" src={product.imageUrl} alt="Card image cap"/>
-            <div className="card-body">
-              <h5 className="card-title">{product.name}</h5>
-              <p className="card-text">{product.description}</p>
-            </div>
-            {/* <ul className="list-group list-group-flush">
-              <li className="list-group-item">Cras justo odio</li>
+          <div style={this.divStyles}>
+              <div className="col-lg-2"> 
+              <div className="card text-white bg-dark" style={this.cardStyles}>
+                <img className="card-img-top" src={product.imageUrl} alt="Card image cap"/>
+                <div className="card-body">
+                  <h5 className="card-title">{product.name}</h5>
+                  <div style={this.descStyles}>
+                  <p className="card-text">Category: {product.category}</p>
+                  <p className="card-text">Price: {product.price}</p>
 
-              <li className="list-group-item">Vestibulum at eros</li>
-            </ul> */}
-            <div className="card-body">
-              <FontAwesomeIcon icon={faCartPlus} size="2x"/>
-              <a href="#" className="card-link">Another link</a>
-            </div>
+                  </div>
+                </div>
+                {/* <ul className="list-group list-group-flush">
+                  <li className="list-group-item">Cras justo odio</li>
+
+                  <li className="list-group-item">Vestibulum at eros</li>
+                </ul> */}
+                <div className="card-body" style={this.iconDiv}>
+                  <FontAwesomeIcon icon={faCartPlus} size="2x"  data-id={product._id} className='icon'/>
+                  <FontAwesomeIcon icon={faEdit} size="2x" data-id={product._id} className='icon' onClick={this.editProduct}/>
+                  <FontAwesomeIcon icon={faTrash} size="2x" data-id={product._id} className='icon'/>
+                  {/* <a href="#" className="card-link">Another link</a> */}
+                </div>
+              </div>
+              </div> 
           </div>
-          </div> 
+        
         )
 
         })}
       </div>
+      
 
-      // <Container fluid>
-      //   <Row>
-      //     <Col size="md-6">
-           
-      //     </Col>
-      //     <Col size="md-6 sm-12">
-           
-      //     </Col>
-      //   </Row>
-      // </Container>
     );
   }
 }

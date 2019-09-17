@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import API from "../utils/API";
-import { Redirect } from 'react-router-dom';
 
-class addProduct extends Component  {
+class editProduct extends Component  {
   state= {
       name: '',
       category: '',
@@ -10,7 +9,6 @@ class addProduct extends Component  {
       description: '',
       quantity:0,
       imageUrl: '',
-      logedIn: true
     }
 
   div1Styles = {
@@ -56,9 +54,19 @@ class addProduct extends Component  {
     borderRadius: '5px',
     marginBottom: '2rem'
   }
-// const submitProduct = () => {
 
-// }
+componentDidMount = () => {
+  this.setState({
+    name: this.props.location.state.name,
+    category: this.props.location.state.category,
+    price: this.props.location.state.price,
+    description: this.props.location.state.description,
+    quantity: this.props.location.state.quantity,
+    imageUrl: this.props.location.state.imageUrl
+  })
+}
+
+
 updateNameState = event => {
  console.log(event.target.value);
  this.setState({name: event.target.value})
@@ -81,33 +89,37 @@ updateImageyState = event => {
   this.setState({imageUrl: event.target.value})
 }
 postProduct = () => {
-  console.log('post product')
-  return this.state.logedIn ? <Redirect to='/'/> : '';
   console.log(this.state)
   API.postProduct(this.state).then(function(dbProduct) {console.log(dbProduct)})
 }
 
 render() {
+  
   return (
+    
     <div style={this.container}>
     <div style={this.div1Styles}>
     <p>Product Name:</p>
-    <input style={this.inputStyles} type="text" onChange={this.updateNameState}/>
+    <input style={this.inputStyles} type="text" onChange={this.updateNameState} value={this.state.name}/>
     <p>Product Category:</p>
-    <input style={this.inputStyles} type="text" onChange={this.updateCategoryState}/>
+    <input style={this.inputStyles} type="text" onChange={this.updateCategoryState}
+    value={this.state.category}/>
     <p>Price:</p>
-    <input style={this.inputStyles} type="text" onChange={this.updatePriceState}/>
+    <input style={this.inputStyles} type="text" onChange={this.updatePriceState} 
+    value={this.state.price}/>
     
     <p>Quantity:</p>
-    <input style={this.inputStyles} type="text" onChange={this.updateQuantityState} />
+    <input style={this.inputStyles} type="text" onChange={this.updateQuantityState}
+    value={this.state.quantity} />
   
     <p>Product Image URL:</p>
-    <input style={this.inputStyles} type="text" onChange={this.updateImageyState}/>
+    <input style={this.inputStyles} type="text" onChange={this.updateImageyState}
+    value={this.state.imageUrl}/>
    
     </div>
       <div style={this.div2Styles}>
         <p>Product Description:</p>
-        <textarea style={this.textStyles} type="text" onChange={this.updateDescriptionState}/>
+        <textarea style={this.textStyles} type="text" onChange={this.updateDescriptionState} value={this.state.description}/>
         <button onClick={this.postProduct}>Add Product</button>
       </div>
     </div>
@@ -120,4 +132,4 @@ render() {
 
 
 }
-export default addProduct;
+export default editProduct;
