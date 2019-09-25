@@ -11,6 +11,10 @@ export default {
   getProduct: function(id) {
     console.log(id)
     return axios.get("/api/products/"+id)
+  },
+  postEditProduct: function(id, productData) {
+    console.log(id)
+    return axios.post("/api/products/"+id, productData)
   }
   // // Gets the book with the given id
   // getBook: function(id) {

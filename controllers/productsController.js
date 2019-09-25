@@ -11,7 +11,7 @@ module.exports = {
       .catch(err => res.status(422).json(err));
   },
   findById: function(req, res) {
-    console.log("made it into find by id")
+
     console.log(req.params.id)
     db.Product
       .findById({_id: req.params.id})
@@ -19,6 +19,7 @@ module.exports = {
       .catch(err => res.status(422).json(err));
   },
   create: function(req, res) {
+    console.log("made it innto create")
     db.Product
       .create(req.body)
       .then(dbModel => res.json(dbModel))

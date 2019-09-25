@@ -8,7 +8,11 @@ class editProduct extends Component  {
       price: 0,
       description: '',
       quantity:0,
-      imageUrl: '',
+      imageUrls: [],
+      _id: ''
+      // image1Url: '',
+      // image2Url: '',
+      // image3Url: ''
     }
 
   div1Styles = {
@@ -56,13 +60,20 @@ class editProduct extends Component  {
   }
 
 componentDidMount = () => {
+  const image1Url = this.props.location.state.imageUrls[0] ? this.props.location.state.imageUrls[0] : '';
+  const image2Url = this.props.location.state.imageUrls[1] ? this.props.location.state.imageUrls[1] : '';
+  const image3Url = this.props.location.state.imageUrls[2] ? this.props.location.state.imageUrls[2] : '';
+  const imgUrls = 
+  this.props.location.state.imageUrls.length > 0 ? this.props.location.state.imageUrls : 
+  [image1Url, image2Url, image3Url];
   this.setState({
     name: this.props.location.state.name,
     category: this.props.location.state.category,
     price: this.props.location.state.price,
     description: this.props.location.state.description,
     quantity: this.props.location.state.quantity,
-    imageUrl: this.props.location.state.imageUrl
+    imageUrls: imgUrls,
+    _id: this.props.location.state._id
   })
 }
 
@@ -85,12 +96,24 @@ updateDescriptionState = event => {
 updateQuantityState = event => {
   this.setState({quantity: event.target.value})
 }
-updateImageyState = event => {
-  this.setState({imageUrl: event.target.value})
+updateImage1State = event => {
+  const imgArr =[...this.state.imageUrls];
+  imgArr[0] = event.target.value
+  this.setState({imageUrls: imgArr})
+}
+updateImage2State = event => {
+  const imgArrCopy = [...this.state.imageUrls]
+  imgArrCopy[1] = event.target.value
+  this.setState({imageUrls: imgArrCopy})
+}
+updateImage3State = event => {
+  const imgArrCopy =[...this.state.imageUrls]
+  imgArrCopy[2] = event.target.value
+  this.setState({imageUrls: imgArrCopy})
 }
 postProduct = () => {
   console.log(this.state)
-  API.postProduct(this.state).then(function(dbProduct) {console.log(dbProduct)})
+  API.postEditProduct(this.state._id, this.state).then(function(dbProduct) {console.log(dbProduct)})
 }
 
 render() {
@@ -112,15 +135,19 @@ render() {
     <input style={this.inputStyles} type="text" onChange={this.updateQuantityState}
     value={this.state.quantity} />
   
-    <p>Product Image URL:</p>
-    <input style={this.inputStyles} type="text" onChange={this.updateImageyState}
-    value={this.state.imageUrl}/>
+    <p>Product Image URL #1:</p>
+    <input style={this.inputStyles} type="text" onChange={this.updateImage1State}
+    value={this.state.imageUrls[0]}/>
    
     </div>
       <div style={this.div2Styles}>
+      <p>Product Image URL #2:</p>
+        <input style={this.inputStyles} type="text" onChange={this.updateImage2State} value={this.state.imageUrls[1]}/>
+        <p>Product Image URL #3:</p>
+        <input style={this.inputStyles} type="text" onChange={this.updateImage3State} value={this.state.imageUrls[2]}/>
         <p>Product Description:</p>
         <textarea style={this.textStyles} type="text" onChange={this.updateDescriptionState} value={this.state.description}/>
-        <button onClick={this.postProduct}>Add Product</button>
+        <button onClick={this.postProduct}>Save Changes</button>
       </div>
     </div>
 

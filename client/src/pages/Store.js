@@ -4,16 +4,17 @@ import { Redirect } from 'react-router-dom';
 import API from "../utils/API";
 import {Row, Col, Container} from "../components/Grid";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCartPlus, faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faCartPlus, faEdit, faTrash, faAngleRight, faAngleLeft } from '@fortawesome/free-solid-svg-icons';
 import '../components/Nav/style.css';
+import DeleteModal from '../components/modals/DeleteModal.js';
+import DeleteCard from '../components/Cards/DeleteCard.js';
 class Products extends Component {
   state = {
     products: [],
     editClicked: false,
-    properties: {}
-    // title: "",
-    // author: "",
-    // synopsis: ""
+    properties: {},
+    deleteClicked: false,
+    deleteIndex: 0
   };
 
   divStyles = {
@@ -64,15 +65,12 @@ class Products extends Component {
 // }
 
 editProduct = (event) => {
-  
- 
   let id = ''
   if (event.target.getAttribute('data-id')) {
     id = event.target.getAttribute('data-id')
   } else {
     id = event.target.parentElement.getAttribute('data-id');
   }
-
   API.getProduct(id).then((res) => { 
     
     // <Redirect to={{
@@ -85,9 +83,81 @@ editProduct = (event) => {
       properties: res.data
     })
     console.log(res.data) });
-    // window.location.href = '/editProduct'
+}
 
-    // return <Redirect to='/addProduct'/>
+deleteProduct = (event) => {
+  let id = ''
+  if (event.target.getAttribute('data-id')) {
+    id = event.target.getAttribute('data-id')
+  } else {
+    id = event.target.parentElement.getAttribute('data-id');
+  }
+
+  let index;
+  if (event.target.getAttribute('data-number')) {
+    index = event.target.getAttribute('data-number')
+  } else {
+    index = event.target.parentElement.getAttribute('data-number');
+  }
+
+  console.log(id);
+  console.log(index);
+  this.setState({deleteClicked:true, deleteIndex: index});
+}
+
+cancelDelete = (event) => {
+  console.log('cancel clicked');
+  this.setState({deleteClicked: false});
+}
+
+
+nextImage = (event) => {
+  let rightArrow;
+  if(event.target.tagName === 'path') {
+    rightArrow = event.target.parentElement;
+  } else {
+    rightArrow = event.target
+  }
+
+  let cardNum = rightArrow.getAttribute('data-index');
+
+
+const prodsCopy = [...this.state.products];
+let imageArr = prodsCopy[cardNum].imageUrls;
+let currentImage = rightArrow.previousSibling.getAttribute('src');
+let index = imageArr.indexOf(currentImage);
+
+  if (index < imageArr.length-1) {
+    index ++
+    rightArrow.previousSibling.setAttribute('src', imageArr[index]);
+  } else {
+    rightArrow.previousSibling.setAttribute('src', imageArr[0]);
+  }
+}
+previousImage = (event) => {
+  let leftArrow;
+  if(event.target.tagName === 'path') {
+    leftArrow = event.target.parentElement;
+  } else {
+    leftArrow = event.target
+  }
+
+  let cardNum = leftArrow.getAttribute('data-index');
+
+
+const prodsCopy = [...this.state.products];
+let imageArr = prodsCopy[cardNum].imageUrls;
+let currentImage = leftArrow.nextSibling.getAttribute('src');
+let index = imageArr.indexOf(currentImage);
+
+
+  if (index > 0) {
+    index --;
+    leftArrow.nextSibling.setAttribute('src', imageArr[index]);
+  } else {
+    index = imageArr.length -1;
+    leftArrow.nextSibling.setAttribute('src', imageArr[index]);
+  }
 }
 
   // handleInputChange = event => {
@@ -119,13 +189,24 @@ editProduct = (event) => {
         }}/> : 
    
       <div className="row">
-        {this.state.products.map(product => {
+      {this.state.deleteClicked?  <DeleteModal cancel={this.cancelDelete} product={this.state.products[this.state.deleteIndex]}>
+      
+        <DeleteCard product={this.state.products[this.state.deleteIndex]} />
+
+      </DeleteModal> : ''}
+       
+        {this.state.products.map((product, index) => {
           
           return (
           <div style={this.divStyles}>
               <div className="col-lg-2"> 
               <div className="card text-white bg-dark" style={this.cardStyles}>
-                <img className="card-img-top" src={product.imageUrl} alt="Card image cap"/>
+              <div className='pictureDiv'>
+                <FontAwesomeIcon icon={faAngleLeft} size="2x" onClick={this.previousImage} data-id={product._id} data-index={index}className='icon angleLeft'/>
+                <img className="card-img-top" src={product.imageUrls[0]} alt="Card image cap"/>
+                <FontAwesomeIcon icon={faAngleRight} size="2x"  data-id={product._id}  data-index={index} className='icon angleRight' onClick={this.nextImage} /> 
+              </div>
+
                 <div className="card-body">
                   <h5 className="card-title">{product.name}</h5>
                   <div style={this.descStyles}>
@@ -140,9 +221,9 @@ editProduct = (event) => {
                   <li className="list-group-item">Vestibulum at eros</li>
                 </ul> */}
                 <div className="card-body" style={this.iconDiv}>
-                  <FontAwesomeIcon icon={faCartPlus} size="2x"  data-id={product._id} className='icon'/>
-                  <FontAwesomeIcon icon={faEdit} size="2x" data-id={product._id} className='icon' onClick={this.editProduct}/>
-                  <FontAwesomeIcon icon={faTrash} size="2x" data-id={product._id} className='icon'/>
+                  <FontAwesomeIcon icon={faCartPlus} size="2x"  data-id={product._id} className='icon' />
+                  <FontAwesomeIcon icon={faEdit} size="2x" data-id={product._id} data-number={index} className='icon' onClick={this.editProduct}/>
+                  <FontAwesomeIcon icon={faTrash} size="2x" data-id={product._id} className='icon' onClick={this.deleteProduct} data-number={index}/>
                   {/* <a href="#" className="card-link">Another link</a> */}
                 </div>
               </div>

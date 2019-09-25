@@ -10,6 +10,7 @@ router.route("/")
   // Matches with "/api/products/:id"
 router.route("/:id")
   .get(productsController.findById)
+  .post(productsController.update)
 // Matches with "/api/books/:id"
 // router
 //   .route("/:id")

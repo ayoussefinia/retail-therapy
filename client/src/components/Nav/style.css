@@ -104,6 +104,26 @@ display: inline-block;
 .icon:hover {
   cursor: pointer;
 }
+.button:hover {
+  cursor: pointer;
+}
+
+.pictureDiv {
+  position: relative;
+}
+
+.angleRight {
+  position: absolute;
+  top:45%;
+  right: 0;
+}
+
+.angleLeft {
+  position: absolute;
+  top:45%;
+  left: 0;
+}
+
 @media (max-width: 600px) {
   .top-line{
     color: white;

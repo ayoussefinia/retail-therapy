@@ -9,7 +9,9 @@ class addProduct extends Component  {
       price: 0,
       description: '',
       quantity:0,
-      imageUrl: '',
+      image1Url: '',
+      image2Url: '',
+      image3Url: '',
       logedIn: true
     }
 
@@ -77,14 +79,30 @@ updateDescriptionState = event => {
 updateQuantityState = event => {
   this.setState({quantity: event.target.value})
 }
-updateImageyState = event => {
-  this.setState({imageUrl: event.target.value})
+updateImage1State = event => {
+  this.setState({image1Url: event.target.value})
+}
+updateImage2State = event => {
+  this.setState({image2Url: event.target.value})
+}
+updateImage3State = event => {
+  this.setState({image3Url: event.target.value})
 }
 postProduct = () => {
   console.log('post product')
-  return this.state.logedIn ? <Redirect to='/'/> : '';
+  // return this.state.logedIn ? <Redirect to='/'/> : '';
   console.log(this.state)
-  API.postProduct(this.state).then(function(dbProduct) {console.log(dbProduct)})
+  const imgArr = [this.state.image1Url, this.state.image2Url, this.state.image3Url]
+  const postObj = {
+    name: this.state.name,
+    category: this.state.category,
+    price: this.state.price,
+    description: this.state.description,
+    quantity: this.state.quantity,
+    imageUrls: imgArr
+  }
+  console.log(postObj)
+  API.postProduct(postObj).then(function(dbProduct) {console.log(dbProduct)})
 }
 
 render() {
@@ -100,16 +118,22 @@ render() {
     
     <p>Quantity:</p>
     <input style={this.inputStyles} type="text" onChange={this.updateQuantityState} />
-  
-    <p>Product Image URL:</p>
-    <input style={this.inputStyles} type="text" onChange={this.updateImageyState}/>
-   
+
+      <p>Product Image URL #1:</p>
+      <input style={this.inputStyles} type="text" onChange={this.updateImage1State}/>
     </div>
       <div style={this.div2Styles}>
+
+        <p>Product Image URL #2:</p>
+        <input style={this.inputStyles} type="text" onChange={this.updateImage2State}/>
+        <p>Product Image URL #3:</p>
+        <input style={this.inputStyles} type="text" onChange={this.updateImage3State}/>
+
         <p>Product Description:</p>
         <textarea style={this.textStyles} type="text" onChange={this.updateDescriptionState}/>
         <button onClick={this.postProduct}>Add Product</button>
       </div>
+      
     </div>
 
   )
