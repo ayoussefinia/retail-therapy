@@ -11,6 +11,7 @@ router.route("/")
 router.route("/:id")
   .get(productsController.findById)
   .post(productsController.update)
+  .delete(productsController.remove)
 // Matches with "/api/books/:id"
 // router
 //   .route("/:id")

@@ -29,8 +29,7 @@ class Products extends Component {
   }
 
   cardStyles = {
-    width: "18rem",
-    height: '45vh'
+    width: "18rem"
   }
 
   iconDiv = {
@@ -85,7 +84,7 @@ editProduct = (event) => {
     console.log(res.data) });
 }
 
-deleteProduct = (event) => {
+deleteProductModalShow = (event) => {
   let id = ''
   if (event.target.getAttribute('data-id')) {
     id = event.target.getAttribute('data-id')
@@ -100,14 +99,24 @@ deleteProduct = (event) => {
     index = event.target.parentElement.getAttribute('data-number');
   }
 
-  console.log(id);
-  console.log(index);
+
   this.setState({deleteClicked:true, deleteIndex: index});
 }
 
 cancelDelete = (event) => {
-  console.log('cancel clicked');
   this.setState({deleteClicked: false});
+}
+
+confirmDelete = (event) => {
+  console.log('confirm delete clicked');
+  console.log(this.state.products[this.state.deleteIndex]._id);
+  let id = this.state.products[this.state.deleteIndex]._id;
+  API.deleteProduct(id).then(response => {
+      console.log(response);
+      this.setState({deleteClicked: false, deleteIndex: 0})
+      this.loadProducts();
+    });
+ 
 }
 
 
@@ -189,7 +198,7 @@ let index = imageArr.indexOf(currentImage);
         }}/> : 
    
       <div className="row">
-      {this.state.deleteClicked?  <DeleteModal cancel={this.cancelDelete} product={this.state.products[this.state.deleteIndex]}>
+      {this.state.deleteClicked?  <DeleteModal cancel={this.cancelDelete} confirm={this.confirmDelete} product={this.state.products[this.state.deleteIndex]} >
       
         <DeleteCard product={this.state.products[this.state.deleteIndex]} />
 
@@ -223,7 +232,7 @@ let index = imageArr.indexOf(currentImage);
                 <div className="card-body" style={this.iconDiv}>
                   <FontAwesomeIcon icon={faCartPlus} size="2x"  data-id={product._id} className='icon' />
                   <FontAwesomeIcon icon={faEdit} size="2x" data-id={product._id} data-number={index} className='icon' onClick={this.editProduct}/>
-                  <FontAwesomeIcon icon={faTrash} size="2x" data-id={product._id} className='icon' onClick={this.deleteProduct} data-number={index}/>
+                  <FontAwesomeIcon icon={faTrash} size="2x" data-id={product._id} className='icon' onClick={this.deleteProductModalShow} data-number={index}/>
                   {/* <a href="#" className="card-link">Another link</a> */}
                 </div>
               </div>

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import API from "../utils/API";
+import { Redirect } from 'react-router-dom';
 
 class editProduct extends Component  {
   state= {
@@ -9,7 +10,8 @@ class editProduct extends Component  {
       description: '',
       quantity:0,
       imageUrls: [],
-      _id: ''
+      _id: '',
+      productEdited: false
       // image1Url: '',
       // image2Url: '',
       // image3Url: ''
@@ -113,13 +115,20 @@ updateImage3State = event => {
 }
 postProduct = () => {
   console.log(this.state)
-  API.postEditProduct(this.state._id, this.state).then(function(dbProduct) {console.log(dbProduct)})
+  API.postEditProduct(this.state._id, this.state).then((dbProduct) => {
+    console.log(dbProduct)
+    this.setState({productEdited: true});
+  })
 }
 
 render() {
   
   return (
-    
+    this.state.productEdited ? 
+    <Redirect to={{
+      pathname: '/',
+      state: this.state.properties
+    }}/> : 
     <div style={this.container}>
     <div style={this.div1Styles}>
     <p>Product Name:</p>

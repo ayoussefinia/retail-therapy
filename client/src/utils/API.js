@@ -15,6 +15,9 @@ export default {
   postEditProduct: function(id, productData) {
     console.log(id)
     return axios.post("/api/products/"+id, productData)
+  },
+  deleteProduct: function(id) {
+    return axios.delete("/api/products/"+id);
   }
   // // Gets the book with the given id
   // getBook: function(id) {

@@ -12,7 +12,8 @@ class addProduct extends Component  {
       image1Url: '',
       image2Url: '',
       image3Url: '',
-      logedIn: true
+      logedIn: true,
+      productAdded: false
     }
 
   div1Styles = {
@@ -102,11 +103,19 @@ postProduct = () => {
     imageUrls: imgArr
   }
   console.log(postObj)
-  API.postProduct(postObj).then(function(dbProduct) {console.log(dbProduct)})
+  API.postProduct(postObj).then((dbProduct) => {
+    this.setState({productAdded: true});
+    })
 }
 
 render() {
   return (
+    this.state.productAdded ? 
+    <Redirect to={{
+      pathname: '/',
+      state: this.state.properties
+    }}/> : 
+
     <div style={this.container}>
     <div style={this.div1Styles}>
     <p>Product Name:</p>

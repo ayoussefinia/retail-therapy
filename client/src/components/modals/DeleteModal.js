@@ -9,7 +9,7 @@ const DeleteModal = (props) => {
     left: '30vw',
     top: '20vh',
     zIndex: '10',
-    height: '70vh',
+    // height: '70vh',
     borderRadius: '5px',
     padding: '1rem'
   }
@@ -18,7 +18,7 @@ const DeleteModal = (props) => {
     top: '0',
     left: '0',
     width: '100%',
-    height: '100%',
+    height: '150%',
     background: 'black',
     opacity: '.7',
     zIndex: '10'
@@ -76,7 +76,7 @@ const DeleteModal = (props) => {
         </div>
         <div style={bottomDiv}>
           <button style={button1Styles} className='button' onClick={props.cancel}>Cancel</button>
-          <button style={button2Styles} className='button'>DELETE</button>
+          <button style={button2Styles} className='button' onClick={props.confirm}>DELETE</button>
         </div>
          
 
