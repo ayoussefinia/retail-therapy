@@ -124,6 +124,14 @@ display: inline-block;
   left: 0;
 }
 
+.product-card {
+  overflow: hidden;
+}
+
+.product-card:hover {
+  cursor: pointer;
+}
+
 @media (max-width: 600px) {
   .top-line{
     color: white;

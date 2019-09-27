@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Store from "./pages/Store";
 import AddProduct from "./pages/AddProduct";
 import EditProduct from "./pages/EditProduct";
+import ViewProduct from "./pages/ViewProduct";
 
 // import Detail from "./pages/Detail";
 import NoMatch from "./pages/NoMatch";
@@ -17,6 +18,7 @@ function App() {
           <Route exact path="/" component={Store} />
           <Route exact path="/addProduct" component={AddProduct} />
           <Route exact path="/editProduct" component={EditProduct} />
+          <Route exact path="/product/:id" component={ViewProduct} />
           {/* <Route exact path="/books" component={Books} />
           <Route exact path="/books/:id" component={Detail} /> */}
           <Route component={NoMatch} />

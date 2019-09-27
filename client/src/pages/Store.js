@@ -14,7 +14,8 @@ class Products extends Component {
     editClicked: false,
     properties: {},
     deleteClicked: false,
-    deleteIndex: 0
+    deleteIndex: 0,
+    viewProductClicked: false
   };
 
   divStyles = {
@@ -24,19 +25,41 @@ class Products extends Component {
   }
   descStyles = {
     height: '50%',
-    width: '100%',
-    // overflowY: 'scroll'
+    width: '100%'
   }
 
   cardStyles = {
-    width: "18rem"
+    width: "18rem",
+    margin: '0 2rem'
   }
 
   iconDiv = {
     display: 'flex',
-    justifyContent: 'space-around'
+    justifyContent: 'space-around',
+    padding: '1rem',
+    alignItems: 'flex-end'
   }
-
+  productSection = {
+    margin: '0 2rem'
+  }
+  cardButton = {
+    width: '50%',
+    height: '2rem',
+    borderRadius: '5px',
+    margin: '.5rem',
+    fontSize: '1.25rem',
+    fontWeight: '600',
+    background: 'white',
+    border: '1px solid black'
+  }
+  cardButtonDiv = {
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'center'
+  }
+  productStats = {
+    padding: '1rem'
+  }
   
   componentDidMount() {
     this.loadProducts();
@@ -52,16 +75,7 @@ class Products extends Component {
       .catch(err => console.log(err));
   };
 
-// getProduct = (id) => {
-//   API.getProduct(id).then(function (res) { console.log(res) });
-// }
 
-// getId = (event)  => {
-//   console.log('inside get id')
-//   console.log(event.target.getAttribute('data-id'));
-
-//   return id;
-// }
 
 editProduct = (event) => {
   let id = ''
@@ -71,12 +85,6 @@ editProduct = (event) => {
     id = event.target.parentElement.getAttribute('data-id');
   }
   API.getProduct(id).then((res) => { 
-    
-    // <Redirect to={{
-    //   pathname: '/editProduct',
-    //   state: res.data
-    //   }}
-    // />
     this.setState({
       editClicked: true,
       properties: res.data
@@ -85,6 +93,7 @@ editProduct = (event) => {
 }
 
 deleteProductModalShow = (event) => {
+  event.preventDefault();
   let id = ''
   if (event.target.getAttribute('data-id')) {
     id = event.target.getAttribute('data-id')
@@ -169,25 +178,42 @@ let index = imageArr.indexOf(currentImage);
   }
 }
 
+viewProduct = (event) => {
+  console.log(event.target.getAttribute('data-id'));
+  console.log('view product called')
+  let id = event.target.getAttribute('data-id');
+  API.getProduct(id).then((res) => { 
+    this.setState({
+      viewProductClicked: true,
+      properties: res.data
+    })
+    console.log(res.data) });
+}
+// ShowButton = (event) => {
+//   // console.log(event.target);
+//   let div;
+//   if(event.target.tagName === 'DIV' && event.target.classList.contains('product-card')) {
+//     div = event.target
+//   } else if (event.target.parentElement.tagName === 'DIV' && event.target.parentElement.classList.contains('product-card')) {
+//     div = event.target.parentElement;
+//   } else if (event.target.parentElement.parentElement.tagName === 'DIV' &&     event.target.parentElement.parentElement.classList.contains('product-card')){
+//     div = event.target.parentElement.parentElement;
+//   } else if (event.target.parentElement.parentElement.parentElement.tagName === 'DIV' &&     event.target.parentElement.parentElement.parentElement.classList.contains('product-card')) {
+//     div = event.target.parentElement.parentElement.parentElement;
+//   }
+//   console.log(div.getAttribute('data-index'))
+//   let id = div.getAttribute('data-index');
+
+// }
+
   // handleInputChange = event => {
   //   const { name, value } = event.target;
   //   this.setState({
   //     [name]: value
   //   });
-  // };
+  // }; ==
 
-  // handleFormSubmit = event => {
-  //   event.preventDefault();
-  //   if (this.state.title && this.state.author) {
-  //     API.saveBook({
-  //       title: this.state.title,
-  //       author: this.state.author,
-  //       synopsis: this.state.synopsis
-  //     })
-  //       .then(res => this.loadBooks())
-  //       .catch(err => console.log(err));
-  //   }
-  // };
+
 
   render() {
     return (
@@ -195,28 +221,32 @@ let index = imageArr.indexOf(currentImage);
         <Redirect to={{
           pathname: '/editProduct',
           state: this.state.properties
-        }}/> : 
+        }}/> :  this.state.viewProductClicked ? 
    
-      <div className="row">
-      {this.state.deleteClicked?  <DeleteModal cancel={this.cancelDelete} confirm={this.confirmDelete} product={this.state.products[this.state.deleteIndex]} >
-      
-        <DeleteCard product={this.state.products[this.state.deleteIndex]} />
+        <Redirect to={{
+          pathname: '/product/'+this.state.properties._id,
+          state: this.state.properties
+        }}/> :
 
-      </DeleteModal> : ''}
-       
+      <div className="row" style={this.productSection}> 
+            {this.state.deleteClicked?  <DeleteModal cancel={this.cancelDelete} confirm={this.confirmDelete} product={this.state.products[this.state.deleteIndex]} >
+      
+              <DeleteCard product={this.state.products[this.state.deleteIndex]} />
+
+            </DeleteModal> : ''}
         {this.state.products.map((product, index) => {
           
           return (
-          <div style={this.divStyles}>
-              <div className="col-lg-2"> 
-              <div className="card text-white bg-dark" style={this.cardStyles}>
+          <div style={this.divStyles} >
+         
+              <div className="card text-white bg-dark product-card" style={this.cardStyles}  data-index={index}>
               <div className='pictureDiv'>
                 <FontAwesomeIcon icon={faAngleLeft} size="2x" onClick={this.previousImage} data-id={product._id} data-index={index}className='icon angleLeft'/>
                 <img className="card-img-top" src={product.imageUrls[0]} alt="Card image cap"/>
                 <FontAwesomeIcon icon={faAngleRight} size="2x"  data-id={product._id}  data-index={index} className='icon angleRight' onClick={this.nextImage} /> 
               </div>
 
-                <div className="card-body">
+                <div style={this.productStats}>
                   <h5 className="card-title">{product.name}</h5>
                   <div style={this.descStyles}>
                   <p className="card-text">Category: {product.category}</p>
@@ -224,19 +254,18 @@ let index = imageArr.indexOf(currentImage);
 
                   </div>
                 </div>
-                {/* <ul className="list-group list-group-flush">
-                  <li className="list-group-item">Cras justo odio</li>
+                <div style={this.cardButtonDiv}>
+                    <button style={this.cardButton} data-ref={index} data-id={product._id} onClick={this.viewProduct}>View More</button>
+                </div>
 
-                  <li className="list-group-item">Vestibulum at eros</li>
-                </ul> */}
-                <div className="card-body" style={this.iconDiv}>
-                  <FontAwesomeIcon icon={faCartPlus} size="2x"  data-id={product._id} className='icon' />
+                <div style={this.iconDiv}>
+                  {/* <FontAwesomeIcon icon={faCartPlus} size="2x"  data-id={product._id} className='icon' /> */}
                   <FontAwesomeIcon icon={faEdit} size="2x" data-id={product._id} data-number={index} className='icon' onClick={this.editProduct}/>
                   <FontAwesomeIcon icon={faTrash} size="2x" data-id={product._id} className='icon' onClick={this.deleteProductModalShow} data-number={index}/>
                   {/* <a href="#" className="card-link">Another link</a> */}
                 </div>
               </div>
-              </div> 
+         
           </div>
         
         )
