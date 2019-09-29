@@ -75,6 +75,10 @@ const viewProduct = (props) => {
     margin: '1rem'
    }
 
+   const addToCart = () => {
+     console.log('add to cart called')
+   }
+
   return (
     <div style={containerStyles}>
       <div style={imageDiv}>
@@ -94,13 +98,13 @@ const viewProduct = (props) => {
           <p>{props.location.state.description}</p>
         </div>
         <div style={productStats}>
-          <div style={stat}><strong>Price: </strong>   ${props.location.state.price}</div>
-          <div style={stat}><strong>In Stock: </strong>  {props.location.state.quantity}</div>
-          <div style={stat}><strong>Category: </strong> {props.location.state.category}</div>
+          <div style={stat}><strong>Price: </strong> &nbsp;  ${props.location.state.price}</div>
+          <div style={stat}><strong>In Stock: </strong> &nbsp; {props.location.state.quantity}</div>
+          <div style={stat}><strong>Category: </strong> &nbsp; {props.location.state.category}</div>
         </div>
         <div style={buttonDiv}>  
-        <button style={addCartButton}>Add To Cart</button>
-        <button style={backShopButton}>Back To Shop</button>
+        <button style={addCartButton} onClick={addToCart} className='button'>Add To Cart</button>
+        <button style={backShopButton} className='button' >Back To Shop</button>
         </div>
       </div>
     </div>
