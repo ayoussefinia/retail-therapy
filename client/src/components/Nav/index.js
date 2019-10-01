@@ -1,14 +1,28 @@
-import React from "react";
+import React, {useState} from 'react';
 import "./style.css";
 import {Input} from "../Form";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 
+import { Redirect } from 'react-router-dom';
+
 
 // var FontAwesome = require('react-fontawesome');
 
 function Nav() {
+  const [state, setState] = useState({
+    addProductClicked: false
+  })
+
+  const redirectAddProduct = () => {
+    setState({addProductClicked: true})
+  }
+
   return (
+    // state.addProductClicked ? 
+    //     <Redirect to={{
+    //       pathname: '/addProduct'
+    //     }}/> : 
     <div>
       <div className="navbar-top">
         <div className="navbar-top-left">
@@ -37,12 +51,12 @@ function Nav() {
         <a className="navbar-brand" href="/">
           Shop
         </a>
-        <a className="navbar-brand" href="/">
+        <a className="navbar-brand" href="/addProduct" onClick={redirectAddProduct}>
           Add Product
         </a>
-        <a className="navbar-brand" href="/">
+        {/* <a className="navbar-brand" href="/">
           Edit Product
-        </a>
+        </a> */}
       </nav>
 
     </div>

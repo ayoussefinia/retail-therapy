@@ -7,15 +7,16 @@ import ViewProduct from "./pages/ViewProduct";
 
 // import Detail from "./pages/Detail";
 import NoMatch from "./pages/NoMatch";
-import Nav from "./components/Nav";
+// import Nav from "./components/Nav";
 
 function App() {
   return (
     <Router>
       <div>
-        <Nav />
+        {/* <Nav /> */}
         <Switch>
           <Route exact path="/" component={Store} />
+
           <Route exact path="/addProduct" component={AddProduct} />
           <Route exact path="/editProduct" component={EditProduct} />
           <Route exact path="/product/:id" component={ViewProduct} />

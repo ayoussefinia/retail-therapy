@@ -8,6 +8,7 @@ import { faCartPlus, faEdit, faTrash, faAngleRight, faAngleLeft } from '@fortawe
 import '../components/Nav/style.css';
 import DeleteModal from '../components/modals/DeleteModal.js';
 import DeleteCard from '../components/Cards/DeleteCard.js';
+import Nav from "../components/Nav";
 class Products extends Component {
   state = {
     products: [],
@@ -21,7 +22,8 @@ class Products extends Component {
   divStyles = {
     display: 'flex',
     justifyContent: 'center',
-    marginTop: '1rem'
+    marginTop: '1rem',
+    width: '23vw'
   }
   descStyles = {
     height: '50%',
@@ -227,7 +229,8 @@ viewProduct = (event) => {
           pathname: '/product/'+this.state.properties._id,
           state: this.state.properties
         }}/> :
-
+        <div>
+        <Nav />
       <div className="row" style={this.productSection}> 
             {this.state.deleteClicked?  <DeleteModal cancel={this.cancelDelete} confirm={this.confirmDelete} product={this.state.products[this.state.deleteIndex]} >
       
@@ -255,7 +258,7 @@ viewProduct = (event) => {
                   </div>
                 </div>
                 <div style={this.cardButtonDiv}>
-                    <button style={this.cardButton} data-ref={index} data-id={product._id} onClick={this.viewProduct}>View More</button>
+                    <button style={this.cardButton} data-ref={index} data-id={product._id} onClick={this.viewProduct} className='button'>View More</button>
                 </div>
 
                 <div style={this.iconDiv}>
@@ -273,7 +276,7 @@ viewProduct = (event) => {
         })}
       </div>
       
-
+      </div>
     );
   }
 }

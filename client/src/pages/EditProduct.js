@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import API from "../utils/API";
 import { Redirect } from 'react-router-dom';
-
+import Nav from "../components/Nav";
 class editProduct extends Component  {
   state= {
       name: '',
@@ -124,11 +124,14 @@ postProduct = () => {
 render() {
   
   return (
+
     this.state.productEdited ? 
     <Redirect to={{
       pathname: '/',
       state: this.state.properties
     }}/> : 
+    <div>
+     <Nav/>
     <div style={this.container}>
     <div style={this.div1Styles}>
     <p>Product Name:</p>
@@ -159,7 +162,7 @@ render() {
         <button onClick={this.postProduct}>Save Changes</button>
       </div>
     </div>
-
+    </div>
   )
   
 }

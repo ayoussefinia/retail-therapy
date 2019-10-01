@@ -18,7 +18,11 @@ export default {
   },
   deleteProduct: function(id) {
     return axios.delete("/api/products/"+id);
-  }
+  },
+  createGuestCart: function(productData) {
+    return axios.post('/api/cart', productData);
+  } 
+
   // // Gets the book with the given id
   // getBook: function(id) {
   //   return axios.get("/api/books/" + id);

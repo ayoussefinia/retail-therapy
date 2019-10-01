@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import API from "../utils/API";
 import { Redirect } from 'react-router-dom';
-
+import Nav from "../components/Nav";
 class addProduct extends Component  {
   state= {
       name: '',
@@ -115,7 +115,8 @@ render() {
       pathname: '/',
       state: this.state.properties
     }}/> : 
-
+    <div>
+    <Nav/>
     <div style={this.container}>
     <div style={this.div1Styles}>
     <p>Product Name:</p>
@@ -144,7 +145,7 @@ render() {
       </div>
       
     </div>
-
+    </div>
   )
   
 }
