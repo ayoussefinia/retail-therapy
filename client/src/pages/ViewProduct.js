@@ -83,8 +83,9 @@ const viewProduct = (props) => {
     backToShopClicked: false,
     product: props.location.state,
     isLoggedIn: false,
-    guestCartId: '',
-    quantity: 3
+    guestCartId: localStorage.getItem('guestCartId') || '',
+    quantity: 3,
+    productsInCart: 0
   })
 
    const addToCart = () => {
@@ -101,11 +102,44 @@ const viewProduct = (props) => {
       }
       console.log(postObj)
       API.createGuestCart(postObj).then(response => {
-        console.log(response.data._id)
-        const stateCopy = {...state};
-        stateCopy.guestCartId = response.data._id;
-        setState(stateCopy)
+        // console.log(response.data._id)
+        // const stateCopy = {...state};
+        // stateCopy.guestCartId = response.data._id;
+        // setState(stateCopy)
+        localStorage.setItem('guestCartId', response.data._id);
       })
+    } else if (!state.isLoggedIn && state.guestCartId.length >= 0) {
+      console.log('post to temporary cart')
+      API.getGuestCart(state.guestCartId).then(response => {
+        console.log(response.data.products);
+        let productsArr = response.data.products;
+        let newProduct = {
+          item: state.product._id,
+          quantity: state.quantity
+        }
+        productsArr.push(newProduct);
+        console.log(productsArr);
+        let postObj = {
+          products: productsArr
+        }
+
+        API.postEditGuestCart(state.guestCartId, postObj).then(response => {
+          console.log("posted product to cart?", response)
+          const stateCopy = {...state}
+          stateCopy.productsInCart = response.data.products.length;
+          setState(stateCopy);
+        })
+        
+        // console.log("products array", productsArr)
+        // let updatedProductsArr = productsArr.push(product);
+        // console.log("updated prodcuts array", updatedProductsArr)
+        // let postObj = {
+        //   products: updatedProductsArr
+        // }
+        // console.log("post object", postObj);
+
+
+      } )
     }
    }
 
@@ -121,7 +155,7 @@ const viewProduct = (props) => {
         }}/> : 
 
     <div>
-      <Nav/>
+      <Nav productsInCart={state.productsInCart}/>
     <div style={containerStyles}>
       <div style={imageDiv}>
         <div style={largeImageContainer}>

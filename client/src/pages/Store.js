@@ -221,7 +221,7 @@ viewProduct = (event) => {
     return (
       this.state.editClicked ? 
         <Redirect to={{
-          pathname: '/editProduct',
+          pathname: '/editProduct/'+this.state.properties._id,
           state: this.state.properties
         }}/> :  this.state.viewProductClicked ? 
    

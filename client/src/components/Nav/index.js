@@ -1,23 +1,33 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import "./style.css";
 import {Input} from "../Form";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faShoppingCart } from '@fortawesome/free-solid-svg-icons';
-
+import API from '../../utils/API';
 import { Redirect } from 'react-router-dom';
 
 
 // var FontAwesome = require('react-fontawesome');
 
-function Nav() {
+function Nav(props) {
   const [state, setState] = useState({
-    addProductClicked: false
+    productsInCart: 0
   })
 
   const redirectAddProduct = () => {
     setState({addProductClicked: true})
   }
+  useEffect(() => {
+    let getGuestCartId = localStorage.getItem('guestCartId');
+    API.getGuestCart(getGuestCartId).then(response => {
+      console.log(response.data.products.length)
+      setState({productsInCart:  response.data.products.length})
+    })
+  }, [props.productsInCart]);
 
+  const cartNum = {
+    color: 'white'
+  }
   return (
     // state.addProductClicked ? 
     //     <Redirect to={{
@@ -38,6 +48,7 @@ function Nav() {
         <div className="navbar-top-right">
         <div className="ntr-left">
         <FontAwesomeIcon icon={faShoppingCart} className="cart icon" size="2x"/>
+        <h6 style={cartNum}>{state.productsInCart}</h6>
         </div>
         <div className="ntr-right">
         <nav className="navbar navbar-dark">

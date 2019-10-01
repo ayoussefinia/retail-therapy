@@ -21,7 +21,12 @@ export default {
   },
   createGuestCart: function(productData) {
     return axios.post('/api/cart', productData);
-  } 
+  },
+  postEditGuestCart: function(id, productData) {
+    return axios.post('/api/cart/'+id, productData) 
+  }, getGuestCart: function(id) {
+    return axios.get('/api/cart/'+id)
+  }
 
   // // Gets the book with the given id
   // getBook: function(id) {
