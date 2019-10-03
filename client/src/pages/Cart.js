@@ -10,7 +10,8 @@ const Cart = () => {
   const [state, setState] = useState({
     cartProducts: [],
     guestCartId: localStorage.getItem('guestCartId') || '',
-    cartPrice: 0
+    cartPrice: 0,
+    backToShopClicked: false
   });
   useEffect(() => {
     let getGuestCartId = localStorage.getItem('guestCartId');
@@ -53,6 +54,11 @@ const backToShopButton = {
   borderRadius: '5px',
   margin: '1rem'
 }
+
+const backToShop = () => {
+  setState({backToShopClicked: true})
+}
+
   const updateCart = (updatedArr) => {
 
     const updatedArrCopy = [...updatedArr];
@@ -80,13 +86,18 @@ const backToShopButton = {
     })
   }
   return(
+    state.backToShopClicked ? 
+   
+        <Redirect to={{
+          pathname: '/'
+        }}/> : 
     <div>
       <Nav/>
       <div style={cartContainer} className='Cart'>
       <h1 style={cartHeader}>Your Cart Total: $ {state.cartPrice} </h1>
       <div style={buttonContainer}>
-        <button style={completePurchaseButton} className='button'>Complete Purchase</button>
-        <button style={backToShopButton} className='button'>Back to shop</button>
+        <button style={completePurchaseButton} className='button'>Checkout</button>
+        <button style={backToShopButton} className='button' onClick={backToShop}>Back to shop</button>
       </div>
 
           {state.cartProducts.map( (product, index) => 

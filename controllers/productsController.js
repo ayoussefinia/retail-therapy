@@ -37,5 +37,14 @@ module.exports = {
       .then(dbModel => dbModel.remove())
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
+  },
+  findByProductName: function(req, res) {
+    console.log('+++++++++made it into find by name')
+    var string = req.params.name
+    db.Product
+      .find({ name : { $regex: string, $options: 'i'} })
+      .sort({ date: -1 })
+      .then(dbProducts => res.json(dbProducts))
+      .catch(err => res.status(422).json(err));
   }
 };

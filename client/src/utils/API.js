@@ -25,7 +25,10 @@ export default {
   postEditGuestCart: function(id, productData) {
     return axios.post('/api/cart/'+id, productData) 
   }, getGuestCart: function(id) {
-    return axios.get('/api/cart/'+id)
+    return axios.get('/api/cart/'+id);
+  },
+  searchProducts: function(searchString) {
+    return axios.get('api/products/name/'+ searchString);
   }
 
   // // Gets the book with the given id

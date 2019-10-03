@@ -3,7 +3,8 @@ import '../components/Nav/style.css';
 import { Redirect } from 'react-router-dom';
 import Nav from "../components/Nav";
 import API from "../utils/API";
-
+import AddToCartModal from "../components/modals/AddCartModal";
+import AddCartCard from "../components/Cards/AddCartCard";
 const viewProduct = (props) => {
   const containerStyles = {
     height: '100vh',
@@ -84,15 +85,23 @@ const viewProduct = (props) => {
     product: props.location.state,
     isLoggedIn: false,
     guestCartId: localStorage.getItem('guestCartId') || '',
-    quantity: 3,
-    productsInCart: 0
+    quantity: 0,
+    productsInCart: 0,
+    addToCartClicked: false
+
   })
 
+  const showAddToCartModal = () => {
+    const stateCopy = {...state};
+    stateCopy.addToCartClicked = true;
+    setState(stateCopy);
+  }
+
    const addToCart = () => {
+  
      // in the case that this is the first item in the guest cart
     if(!state.isLoggedIn && state.guestCartId.length <= 0) {
-      console.log('create a temporary cart')
-      console.log(state.product._id)
+
       var product = {
         item: state.product._id,
         quantity: state.quantity
@@ -100,13 +109,17 @@ const viewProduct = (props) => {
       let postObj = {
         products: [product]
       }
-      console.log(postObj)
+    
       API.createGuestCart(postObj).then(response => {
         // console.log(response.data._id)
         // const stateCopy = {...state};
         // stateCopy.guestCartId = response.data._id;
         // setState(stateCopy)
         localStorage.setItem('guestCartId', response.data._id);
+        let stateCopy = {...state}
+        stateCopy.addToCartClicked = false;
+       
+        setState(stateCopy)
       })
     } else if (!state.isLoggedIn && state.guestCartId.length >= 0) {
       console.log('post to temporary cart')
@@ -127,20 +140,26 @@ const viewProduct = (props) => {
           console.log("posted product to cart?", response)
           const stateCopy = {...state}
           stateCopy.productsInCart = response.data.products.length;
+          
+          stateCopy.addToCartClicked = false;
+        
+          
           setState(stateCopy);
         })
-        
-        // console.log("products array", productsArr)
-        // let updatedProductsArr = productsArr.push(product);
-        // console.log("updated prodcuts array", updatedProductsArr)
-        // let postObj = {
-        //   products: updatedProductsArr
-        // }
-        // console.log("post object", postObj);
-
-
       } )
     }
+   }
+   const changeQuantity = (event) => {
+    console.log(event.target.value)
+    const stateCopy = {...state}
+    stateCopy.quantity = Number(event.target.value);
+    console.log(stateCopy);
+    setState(stateCopy);
+   }
+   const cancel = () => {
+     const stateCopy = {...state};
+     stateCopy.addToCartClicked = false;
+     setState(stateCopy);
    }
 
    const backToShop = () => {
@@ -149,13 +168,17 @@ const viewProduct = (props) => {
 
   return (
    state.backToShopClicked ? 
-   
         <Redirect to={{
           pathname: '/'
-        }}/> : 
+        }}/> :
 
     <div>
       <Nav productsInCart={state.productsInCart}/>
+
+        { state.addToCartClicked ? 
+        
+        <AddToCartModal product={state.product} cancel={cancel} changeQuantity={changeQuantity} addToCart={addToCart}> <AddCartCard product={state.product}/> </AddToCartModal>: ''}
+
     <div style={containerStyles}>
       <div style={imageDiv}>
         <div style={largeImageContainer}>
@@ -179,7 +202,7 @@ const viewProduct = (props) => {
           <div style={stat}><strong>Category: </strong> &nbsp; {props.location.state.category}</div>
         </div>
         <div style={buttonDiv}>  
-        <button style={addCartButton} onClick={addToCart} className='button'>Add To Cart</button>
+        <button style={addCartButton} onClick={showAddToCartModal} className='button'>Add To Cart</button>
         <button style={backShopButton} className='button' onClick={backToShop}>Back To Shop</button>
         </div>
       </div>

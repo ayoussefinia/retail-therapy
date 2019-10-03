@@ -191,30 +191,20 @@ viewProduct = (event) => {
     })
     console.log(res.data) });
 }
-// ShowButton = (event) => {
-//   // console.log(event.target);
-//   let div;
-//   if(event.target.tagName === 'DIV' && event.target.classList.contains('product-card')) {
-//     div = event.target
-//   } else if (event.target.parentElement.tagName === 'DIV' && event.target.parentElement.classList.contains('product-card')) {
-//     div = event.target.parentElement;
-//   } else if (event.target.parentElement.parentElement.tagName === 'DIV' &&     event.target.parentElement.parentElement.classList.contains('product-card')){
-//     div = event.target.parentElement.parentElement;
-//   } else if (event.target.parentElement.parentElement.parentElement.tagName === 'DIV' &&     event.target.parentElement.parentElement.parentElement.classList.contains('product-card')) {
-//     div = event.target.parentElement.parentElement.parentElement;
-//   }
-//   console.log(div.getAttribute('data-index'))
-//   let id = div.getAttribute('data-index');
 
-// }
-
-  // handleInputChange = event => {
-  //   const { name, value } = event.target;
-  //   this.setState({
-  //     [name]: value
-  //   });
-  // }; ==
-
+searchProducts = (event) => {
+  console.log(event.target.value)
+  if(event.target.value === ''){
+    API.getProducts().then(response => this.setState({products: response.data}) )
+  }else{
+    API.searchProducts(event.target.value).then(result => {
+      console.log(result.data)
+      if(result.data){
+        this.setState({products: result.data})
+      }
+    })
+  }
+}
 
 
   render() {
@@ -230,7 +220,7 @@ viewProduct = (event) => {
           state: this.state.properties
         }}/> :
         <div>
-        <Nav />
+        <Nav search={this.searchProducts}/>
       <div className="row" style={this.productSection}> 
             {this.state.deleteClicked?  <DeleteModal cancel={this.cancelDelete} confirm={this.confirmDelete} product={this.state.products[this.state.deleteIndex]} >
       
@@ -258,7 +248,7 @@ viewProduct = (event) => {
                   </div>
                 </div>
                 <div style={this.cardButtonDiv}>
-                    <button style={this.cardButton} data-ref={index} data-id={product._id} onClick={this.viewProduct} className='button'>View More</button>
+                    <button style={this.cardButton} data-ref={index} data-id={product._id} onClick={this.viewProduct} className='button'>See More</button>
                 </div>
 
                 <div style={this.iconDiv}>

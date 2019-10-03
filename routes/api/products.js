@@ -7,16 +7,14 @@ router.route("/")
   .post(productsController.create)
   // .post(booksController.create);
 
+router.route("/name/:name")
+  .get(productsController.findByProductName)
+
   // Matches with "/api/products/:id"
 router.route("/:id")
   .get(productsController.findById)
   .post(productsController.update)
   .delete(productsController.remove)
-// Matches with "/api/books/:id"
-// router
-//   .route("/:id")
-//   .get(booksController.findById)
-//   .put(booksController.update)
-//   .delete(booksController.remove);
+
 
 module.exports = router;

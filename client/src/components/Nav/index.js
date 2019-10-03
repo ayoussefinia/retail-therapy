@@ -41,7 +41,7 @@ function Nav(props) {
         <div><hr className="bottom-line"/></div>
         
         </div>
-        <div className="navbar-top-middle"><input className="form-control search-bar"/><button className="search-button">
+        <div className="navbar-top-middle"><input onChange={props.search} className="form-control search-bar"/><button className="search-button">
         {/* <FontAwesome name="search" size="1x" className="search-glass" /> */}
         <FontAwesomeIcon icon={faSearch} className='icon' />
         </button></div>
