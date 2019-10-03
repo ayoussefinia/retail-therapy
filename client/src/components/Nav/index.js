@@ -47,7 +47,7 @@ function Nav(props) {
         </button></div>
         <div className="navbar-top-right">
         <div className="ntr-left">
-        <FontAwesomeIcon icon={faShoppingCart} className="cart icon" size="2x"/>
+        <a href="/cart"> <FontAwesomeIcon icon={faShoppingCart} className="cart icon" size="2x" /></a>
         <h6 style={cartNum}>{state.productsInCart}</h6>
         </div>
         <div className="ntr-right">
