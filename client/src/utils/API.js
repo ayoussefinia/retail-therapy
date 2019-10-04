@@ -29,6 +29,9 @@ export default {
   },
   searchProducts: function(searchString) {
     return axios.get('api/products/name/'+ searchString);
+  },
+  searchProductsByCategory: function(searchString) {
+    return axios.get('api/products/category/'+searchString);
   }
 
   // // Gets the book with the given id

@@ -131,8 +131,16 @@ display: inline-block;
 .product-card:hover {
   cursor: pointer;
 }
-.card {
-  
+.navDropdwon {
+  font-size: .75rem;
+  color: black;
+  font-weight: 700;
+  height: 28px;
+  width: 100px;
+}
+.control {
+  height: 28px;
+  padding: 0px;
 }
 
 @media (max-width: 600px) {

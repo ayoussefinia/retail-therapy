@@ -5,11 +5,26 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import API from '../../utils/API';
 import { Redirect } from 'react-router-dom';
+import Dropdown from 'react-dropdown';
+import 'react-dropdown/style.css';
 
 
 // var FontAwesome = require('react-fontawesome');
 
 function Nav(props) {
+  console.log("navvvvvvvvv", props.selection)
+  const options = [
+    { value: 'Category:', label: '' },
+    { value: '1', label: 'Electronics' },
+    { value: '2', label: 'Apparel'},
+    { value: '3', label: 'Shoes' },
+    { value: '4', label: 'Books' },
+    { value: '5', label: 'Food' },
+    { value: '6', label: 'Sporting Goods' },
+    { value: '7', label: 'Accessories' }
+  ];
+  const defaultOption = options[0];
+
   const [state, setState] = useState({
     productsInCart: 0
   })
@@ -20,13 +35,18 @@ function Nav(props) {
   useEffect(() => {
     let getGuestCartId = localStorage.getItem('guestCartId');
     API.getGuestCart(getGuestCartId).then(response => {
-      console.log(response.data.products.length)
       setState({productsInCart:  response.data.products.length})
     })
   }, [props.productsInCart]);
 
   const cartNum = {
     color: 'white'
+  }
+  const _onSelect = {
+
+  }
+  const dropDownContainer = {
+    borderRadius: '5px'
   }
   return (
     // state.addProductClicked ? 
@@ -41,7 +61,17 @@ function Nav(props) {
         <div><hr className="bottom-line"/></div>
         
         </div>
-        <div className="navbar-top-middle"><input onChange={props.search} className="form-control search-bar"/><button className="search-button">
+        <div className="navbar-top-middle">
+   
+        {props.searchCategory? 
+
+        <Dropdown options={options} onChange={props.searchCategory} value={props.selection} placeholder={props.selection} className='navDropdwon' controlClassName='control' /> 
+        
+        : ''}
+        
+          
+          <input onChange={props.search} className="form-control search-bar"/>
+          <button className="search-button">
         {/* <FontAwesome name="search" size="1x" className="search-glass" /> */}
         <FontAwesomeIcon icon={faSearch} className='icon' />
         </button></div>

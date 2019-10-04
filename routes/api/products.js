@@ -8,7 +8,10 @@ router.route("/")
   // .post(booksController.create);
 
 router.route("/name/:name")
-  .get(productsController.findByProductName)
+  .get(productsController.findByProductName);
+
+  router.route("/category/:category")
+  .get(productsController.findByProductCategory);
 
   // Matches with "/api/products/:id"
 router.route("/:id")

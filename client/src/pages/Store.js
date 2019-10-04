@@ -16,7 +16,8 @@ class Products extends Component {
     properties: {},
     deleteClicked: false,
     deleteIndex: 0,
-    viewProductClicked: false
+    viewProductClicked: false,
+    dropdownSelection: ''
   };
 
   divStyles = {
@@ -70,7 +71,7 @@ class Products extends Component {
   loadProducts = () => {
     API.getProducts()
         .then(res => {
-          console.log(res.data)
+          
           this.setState({ products: res.data })
         }
       )
@@ -91,7 +92,7 @@ editProduct = (event) => {
       editClicked: true,
       properties: res.data
     })
-    console.log(res.data) });
+  });
 }
 
 deleteProductModalShow = (event) => {
@@ -119,11 +120,10 @@ cancelDelete = (event) => {
 }
 
 confirmDelete = (event) => {
-  console.log('confirm delete clicked');
-  console.log(this.state.products[this.state.deleteIndex]._id);
+  
   let id = this.state.products[this.state.deleteIndex]._id;
   API.deleteProduct(id).then(response => {
-      console.log(response);
+    
       this.setState({deleteClicked: false, deleteIndex: 0})
       this.loadProducts();
     });
@@ -181,8 +181,7 @@ let index = imageArr.indexOf(currentImage);
 }
 
 viewProduct = (event) => {
-  console.log(event.target.getAttribute('data-id'));
-  console.log('view product called')
+
   let id = event.target.getAttribute('data-id');
   API.getProduct(id).then((res) => { 
     this.setState({
@@ -205,6 +204,22 @@ searchProducts = (event) => {
     })
   }
 }
+searchCategory = (event) => {
+  console.log(event.label)
+  console.log('state', this.state.dropdownSelection)
+  // this.setState({dropdownSelection: event.label});
+  if(event.label == "Category:") {
+    API.getProducts().then(response => {
+      console.log(response.data)
+      this.setState({products: response.data, dropdownSelection: event.label})
+    }
+    )
+  } else {
+  API.searchProductsByCategory(event.label).then(response => {
+    this.setState({products: response.data, dropdownSelection: event.label})
+  })
+}
+}
 
 
   render() {
@@ -220,8 +235,8 @@ searchProducts = (event) => {
           state: this.state.properties
         }}/> :
         <div>
-        <Nav search={this.searchProducts}/>
-      <div className="row" style={this.productSection}> 
+        <Nav search={this.searchProducts} searchCategory={this.searchCategory} selection={this.state.dropdownSelection}/>
+      <div className="row" style={this.productSection} > 
             {this.state.deleteClicked?  <DeleteModal cancel={this.cancelDelete} confirm={this.confirmDelete} product={this.state.products[this.state.deleteIndex]} >
       
               <DeleteCard product={this.state.products[this.state.deleteIndex]} />

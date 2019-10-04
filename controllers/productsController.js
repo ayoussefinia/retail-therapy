@@ -46,5 +46,14 @@ module.exports = {
       .sort({ date: -1 })
       .then(dbProducts => res.json(dbProducts))
       .catch(err => res.status(422).json(err));
+  },
+  findByProductCategory: function(req, res) {
+    console.log('made it into find by categoy')
+    var string = req.params.category;
+    db.Product
+      .find({ category : { $regex: string, $options: 'i'} })
+      .sort({ date: -1 })
+      .then(dbProducts => res.json(dbProducts))
+      .catch(err => res.status(422).json(err));
   }
 };
