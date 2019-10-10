@@ -126,6 +126,12 @@ display: inline-block;
 
 .product-card {
   overflow: hidden;
+  width: 100%;
+  margin: 0;
+}
+.card {
+  width: 100%;
+  margin: 0;
 }
 
 .product-card:hover {
@@ -141,6 +147,50 @@ display: inline-block;
 .control {
   height: 28px;
   padding: 0px;
+}
+.grid-area {
+  display: grid;
+  grid-template-columns: 25% 25% 25% 25%;
+  justify-items: center;
+  margin: 0 2rem;
+}
+/*************************Media Breakpoints for Card Styles********************************************/
+@media (max-width: 1050px) {
+  .grid-area {
+    grid-template-columns:33% 33% 33%;
+  }
+  .card-container {
+    width: 28vw;
+  }
+}
+
+@media (max-width: 700px) {
+  .grid-area {
+    grid-template-columns: 50% 50%;
+    margin: 0 1rem;
+  }
+  .card-container {
+    width: 44vw;
+  }
+}
+
+@media (max-width: 450px) {
+  .grid-area {
+    grid-template-columns: 100%;
+    margin: 0 1rem;
+  }
+  .card-container {
+    width: 60vw;
+  }
+}
+
+@media (max-width: 375px) {
+  .grid-area {
+    margin: 0;
+  }
+  .card-container {
+    width: 80vw;
+  }
 }
 
 @media (max-width: 600px) {

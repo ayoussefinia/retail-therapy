@@ -9,6 +9,7 @@ import '../components/Nav/style.css';
 import DeleteModal from '../components/modals/DeleteModal.js';
 import DeleteCard from '../components/Cards/DeleteCard.js';
 import Nav from "../components/Nav";
+
 class Products extends Component {
   state = {
     products: [],
@@ -23,8 +24,7 @@ class Products extends Component {
   divStyles = {
     display: 'flex',
     justifyContent: 'center',
-    marginTop: '1rem',
-    width: '23vw'
+    marginTop: '1rem'
   }
   descStyles = {
     height: '50%',
@@ -32,7 +32,7 @@ class Products extends Component {
   }
 
   cardStyles = {
-    width: "18rem",
+    width: "100%",
     margin: '0 2rem'
   }
 
@@ -42,9 +42,9 @@ class Products extends Component {
     padding: '1rem',
     alignItems: 'flex-end'
   }
-  productSection = {
-    margin: '0 2rem'
-  }
+  // productSection = {
+  //   margin: '0 2rem'
+  // }
   cardButton = {
     width: '50%',
     height: '2rem',
@@ -236,7 +236,7 @@ searchCategory = (event) => {
         }}/> :
         <div>
         <Nav search={this.searchProducts} searchCategory={this.searchCategory} selection={this.state.dropdownSelection}/>
-      <div className="row" style={this.productSection} > 
+      <div className="row grid-area" style={this.productSection} > 
             {this.state.deleteClicked?  <DeleteModal cancel={this.cancelDelete} confirm={this.confirmDelete} product={this.state.products[this.state.deleteIndex]} >
       
               <DeleteCard product={this.state.products[this.state.deleteIndex]} />
@@ -245,9 +245,9 @@ searchCategory = (event) => {
         {this.state.products.map((product, index) => {
           
           return (
-          <div style={this.divStyles} >
+          <div style={this.divStyles} className='card-container'>
          
-              <div className="card text-white bg-dark product-card" style={this.cardStyles}  data-index={index}>
+              <div className="card text-white bg-dark product-card m-2" style={this.cardStyles}  data-index={index}>
               <div className='pictureDiv'>
                 <FontAwesomeIcon icon={faAngleLeft} size="2x" onClick={this.previousImage} data-id={product._id} data-index={index}className='icon angleLeft'/>
                 <img className="card-img-top" src={product.imageUrls[0]} alt="Card image cap"/>

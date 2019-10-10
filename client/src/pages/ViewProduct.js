@@ -121,21 +121,36 @@ const viewProduct = (props) => {
        
         setState(stateCopy)
       })
+    //if theres a guest cart with products in it
     } else if (!state.isLoggedIn && state.guestCartId.length >= 0) {
       console.log('post to temporary cart')
       API.getGuestCart(state.guestCartId).then(response => {
-        console.log(response.data.products);
-        let productsArr = response.data.products;
-        let newProduct = {
-          item: state.product._id,
-          quantity: state.quantity
+        console.log(response);
+        let postObj;
+        if(response.data != null){
+          console.log(response.data.products);
+          let productsArr = response.data.products;
+          let newProduct = {
+            item: state.product._id,
+            quantity: state.quantity
+          }
+          productsArr.push(newProduct);
+          console.log(productsArr);
+          postObj = {
+            products: productsArr
+          }
+        } else if(response.data == null) {
+          let productsArr =[];
+          let newProduct = {
+            item: state.product._id,
+            quantity: state.quantity
+          }
+          productsArr.push(newProduct);
+          console.log(productsArr);
+          postObj = {
+            products: productsArr
+          }
         }
-        productsArr.push(newProduct);
-        console.log(productsArr);
-        let postObj = {
-          products: productsArr
-        }
-
         API.postEditGuestCart(state.guestCartId, postObj).then(response => {
           console.log("posted product to cart?", response)
           const stateCopy = {...state}
@@ -146,11 +161,11 @@ const viewProduct = (props) => {
           
           setState(stateCopy);
         })
-      } )
+      } ).catch(err => console.log(err))
     }
    }
    const changeQuantity = (event) => {
-    console.log(event.target.value)
+    console.log("changing state", event.target.value)
     const stateCopy = {...state}
     stateCopy.quantity = Number(event.target.value);
     console.log(stateCopy);

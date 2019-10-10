@@ -16,12 +16,15 @@ const Cart = () => {
   useEffect(() => {
     let getGuestCartId = localStorage.getItem('guestCartId');
     API.getGuestCart(getGuestCartId).then(response => {
-      console.log(response.data.products)
-      let totalPrice = 0;
-      for(let i=0; i<response.data.products.length; i++) {
-        totalPrice= totalPrice + response.data.products[i].item.price * response.data.products[i].quantity
+      if(response.data != null) {
+        console.log('response data', response.data.products)
+        let totalPrice = 0;
+        for(let i=0; i<response.data.products.length; i++) {
+          totalPrice= totalPrice + response.data.products[i].item.price * response.data.products[i].quantity
+        }
+        setState({cartProducts:  response.data.products, cartPrice: totalPrice, guestCartId: localStorage.getItem('guestCartId')})
       }
-      setState({cartProducts:  response.data.products, cartPrice: totalPrice, guestCartId: localStorage.getItem('guestCartId')})
+
     })
   }, []);
   const updateCartQuanity = (event) => {
@@ -76,12 +79,17 @@ const backToShop = () => {
 
     API.postEditGuestCart(state.guestCartId, postObj).then(response => {
       API.getGuestCart(state.guestCartId).then(response => {
-      
+        console.log('response data', response.data.products)
+      if(response.data.products !== undefined) {
         let totalPrice = 0;
         for(let i=0; i<response.data.products.length; i++) {
+
           totalPrice= totalPrice + response.data.products[i].item.price * response.data.products[i].quantity
         }
         setState({cartProducts:  response.data.products, cartPrice: totalPrice, guestCartId: localStorage.getItem('guestCartId') || ''})
+      }
+      else return;
+
       })
     })
   }

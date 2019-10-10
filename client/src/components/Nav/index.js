@@ -12,7 +12,7 @@ import 'react-dropdown/style.css';
 // var FontAwesome = require('react-fontawesome');
 
 function Nav(props) {
-  console.log("navvvvvvvvv", props.selection)
+ 
   const options = [
     { value: 'Category:', label: '' },
     { value: '1', label: 'Electronics' },
@@ -35,7 +35,10 @@ function Nav(props) {
   useEffect(() => {
     let getGuestCartId = localStorage.getItem('guestCartId');
     API.getGuestCart(getGuestCartId).then(response => {
-      setState({productsInCart:  response.data.products.length})
+      if(response.data != null) {
+        setState({productsInCart:  response.data.products.length})
+      }
+      
     })
   }, [props.productsInCart]);
 
@@ -82,7 +85,7 @@ function Nav(props) {
         </div>
         <div className="ntr-right">
         <nav className="navbar navbar-dark">
-        <a className="navbar-brand" href="/">Login</a>
+        <a className="navbar-brand" href="/login">Login</a>
         <a className="navbar-brand" href="/">Logout</a>
         </nav>
         </div>
