@@ -91,8 +91,8 @@ function Nav(props) {
         </div>
         <div className="ntr-right">
         <nav className="navbar navbar-dark">
-        <a className="navbar-brand" href="/login">Login</a>
-        <a className="navbar-brand" href="/">Logout</a>
+        {/* <a className="navbar-brand" href="/login">Login</a>
+        <a className="navbar-brand" href="/">Logout</a> */}
         </nav>
         </div>
         </div>
