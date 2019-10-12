@@ -131,7 +131,7 @@ render() {
       state: this.state.properties
     }}/> : 
     <div>
-     <Nav/>
+     <Nav location={this.props.location.pathname}/>
     <div style={this.container}>
     <div style={this.div1Styles}>
     <p>Product Name:</p>

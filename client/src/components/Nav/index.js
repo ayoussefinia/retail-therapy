@@ -64,20 +64,26 @@ function Nav(props) {
         <div><hr className="bottom-line"/></div>
         
         </div>
-        <div className="navbar-top-middle">
-   
-        {props.searchCategory? 
 
-        <Dropdown options={options} onChange={props.searchCategory} value={props.selection} placeholder={props.selection} className='navDropdwon' controlClassName='control' /> 
-        
-        : ''}
-        
+          {props.location == '/' ?
+          <div className="navbar-top-middle">
+          {props.searchCategory? 
+
+            <Dropdown options={options} onChange={props.searchCategory} value={props.selection} placeholder={props.selection} className='navDropdwon' controlClassName='control' /> 
           
-          <input onChange={props.search} className="form-control search-bar"/>
-          <button className="search-button">
-        {/* <FontAwesome name="search" size="1x" className="search-glass" /> */}
-        <FontAwesomeIcon icon={faSearch} className='icon' />
-        </button></div>
+          : ''}
+          
+          
+            <input onChange={props.search} className="form-control search-bar"/>
+            <button className="search-button">  
+          
+
+          {/* <FontAwesome name="search" size="1x" className="search-glass" /> */}
+          <FontAwesomeIcon icon={faSearch} className='icon' />
+          </button>
+          </div> 
+          : ''
+          }
         <div className="navbar-top-right">
         <div className="ntr-left">
         <a href="/cart"> <FontAwesomeIcon icon={faShoppingCart} className="cart icon" size="2x" /></a>

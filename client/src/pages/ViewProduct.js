@@ -188,7 +188,7 @@ const viewProduct = (props) => {
         }}/> :
 
     <div>
-      <Nav productsInCart={state.productsInCart}/>
+      <Nav productsInCart={state.productsInCart} location={props.history.location.pathname}/>
 
         { state.addToCartClicked ? 
         

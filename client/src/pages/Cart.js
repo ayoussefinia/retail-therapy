@@ -6,7 +6,7 @@ import API from "../utils/API";
 import CartProduct from "../components/CartProduct/CartProduct";
 import classes from "./Cart.css"
 
-const Cart = () => {
+const Cart = (props) => {
   const [state, setState] = useState({
     cartProducts: [],
     guestCartId: localStorage.getItem('guestCartId') || '',
@@ -93,18 +93,22 @@ const backToShop = () => {
       })
     })
   }
+  const checkout = () => {
+    console.log("this is your page", props.history.location.pathname)
+  }
   return(
+    
     state.backToShopClicked ? 
    
         <Redirect to={{
           pathname: '/'
         }}/> : 
     <div>
-      <Nav/>
+      <Nav location={props.history.location.pathname}/>
       <div style={cartContainer} className='Cart'>
       <h1 style={cartHeader}>Your Cart Total: $ {state.cartPrice} </h1>
       <div style={buttonContainer}>
-        <button style={completePurchaseButton} className='button'>Checkout</button>
+        <button style={completePurchaseButton} className='button' onClick={checkout}>Checkout</button>
         <button style={backToShopButton} className='button' onClick={backToShop}>Back to shop</button>
       </div>
 

@@ -88,6 +88,7 @@ editProduct = (event) => {
     id = event.target.parentElement.getAttribute('data-id');
   }
   API.getProduct(id).then((res) => { 
+
     this.setState({
       editClicked: true,
       properties: res.data
@@ -235,7 +236,7 @@ searchCategory = (event) => {
           state: this.state.properties
         }}/> :
         <div>
-        <Nav search={this.searchProducts} searchCategory={this.searchCategory} selection={this.state.dropdownSelection}/>
+        <Nav search={this.searchProducts} searchCategory={this.searchCategory} selection={this.state.dropdownSelection} location={this.props.location.pathname}/>
       <div className="row grid-area" style={this.productSection} > 
             {this.state.deleteClicked?  <DeleteModal cancel={this.cancelDelete} confirm={this.confirmDelete} product={this.state.products[this.state.deleteIndex]} >
       
@@ -258,7 +259,7 @@ searchCategory = (event) => {
                   <h5 className="card-title">{product.name}</h5>
                   <div style={this.descStyles}>
                   <p className="card-text">Category: {product.category}</p>
-                  <p className="card-text">Price: {product.price}</p>
+                  <p className="card-text">Price: $ {product.price}</p>
 
                   </div>
                 </div>
