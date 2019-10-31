@@ -96,6 +96,37 @@ const backToShop = () => {
   const checkout = () => {
     console.log("this is your page", props.history.location.pathname)
   }
+  const deleteProductFromCart = (index) => {
+    console.log([...state.cartProducts]);
+    const stateProductsCopy = [...state.cartProducts];
+    stateProductsCopy.splice(index, 1);
+    console.log("newProductsArray:", stateProductsCopy);
+    let postArr =[]
+    for(let i=0; i<stateProductsCopy.length; i++){
+      postArr[i] = {
+        item: stateProductsCopy[i].item._id,
+        quantity: stateProductsCopy[i].quantity
+      }
+    }
+    var postObj = {
+      products: postArr
+    }
+    API.postEditGuestCart(state.guestCartId, postObj).then(response => {
+      API.getGuestCart(state.guestCartId).then(response => {
+        console.log('response data', response.data.products)
+      if(response.data.products !== undefined) {
+        let totalPrice = 0;
+        for(let i=0; i<response.data.products.length; i++) {
+
+          totalPrice= totalPrice + response.data.products[i].item.price * response.data.products[i].quantity
+        }
+        setState({cartProducts:  response.data.products, cartPrice: totalPrice, guestCartId: localStorage.getItem('guestCartId') || ''})
+      }
+      else return;
+
+      })
+    })
+  }
   return(
     
     state.backToShopClicked ? 
@@ -113,7 +144,7 @@ const backToShop = () => {
       </div>
 
           {state.cartProducts.map( (product, index) => 
-            <CartProduct products={state.cartProducts} index={index} updateCart={updateCart}/>
+            <CartProduct products={state.cartProducts} index={index} updateCart={updateCart} delete={deleteProductFromCart}/>
         )}
       </div>
     </div>

@@ -1,4 +1,6 @@
 import React, {useState, useEffect} from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {faTimes} from '@fortawesome/free-solid-svg-icons';
 
 
 // import '../components/Nav/style.css';
@@ -38,7 +40,8 @@ const CartProduct = (props) => {
   }
   const productOptions = {
     display: 'flex',
-    justifyContent: 'space-around'
+    justifyContent: 'space-around',
+    alignItems: 'center'
   }
   const [state, setState] = useState({
     quantity: 0
@@ -60,6 +63,11 @@ const CartProduct = (props) => {
    
     // props.updateCart()
   }
+  // const deleteProductFromCart = (event) => {
+  //   console.log('products:', state.products);
+  //   console.log("index", props.index);
+    
+  // }
 
   return (
     <div style={cartItem}>
@@ -69,7 +77,10 @@ const CartProduct = (props) => {
       <div style={productNameContainer}>
       <h4>{props.products[props.index].item.name}</h4>
       </div>
-      <div style={productOptions}><input type="text" style={inputStyle} value={state.quantity} onChange={updateCartQuanity} data-ref={props.index}/></div>
+      <div style={productOptions}>
+        <input type="text" style={inputStyle} value={state.quantity} onChange={updateCartQuanity} data-ref={props.index}/>
+        <FontAwesomeIcon icon={faTimes} className='icon' onClick={() => props.delete(props.index)}/>
+      </div>
       
     </div>
   )
