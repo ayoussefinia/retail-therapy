@@ -29,7 +29,7 @@ display: inline-block;
 }
 .navbar-top-right {
   width: 25%;
-  border: 1px solid black;
+  /* border: 1px solid black; */
   height: 100%;
   display: flex;
 }
@@ -258,10 +258,26 @@ display: inline-block;
       justify-content: center;
     }
     .navbar-top-right {
-      width: 25%;
-      border: 1px solid black;
-      height: 33%;
+      width: 30%;
+      /* border: 1px solid black; */
+      height: 10%;
       display: flex;
+      position: absolute;
+      top: 0;
+      right: 0;
+      z-index:2;
+      justify-content: center;
+      align-items: center;
+      padding: 2px;
+    }
+    .ntr-left {
+      height: 25%;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+    }
+    .ntr-right {
+      width: 0;
     }
 }
 
