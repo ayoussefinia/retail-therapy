@@ -1,6 +1,6 @@
 # Cart-Blanch 
 
-[Deployed App] (https://fast-forest-28615.herokuapp.com/)
+[Deployed App] (https://cart-blanch.herokuapp.com/)
 
 * This app is meant to showcase a mock online store with both admin, customer and guest user flows featuring: 
    * Full CRUD functionality for adding/editing products (admin privelege)
