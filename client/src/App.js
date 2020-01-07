@@ -5,32 +5,63 @@ import AddProduct from "./pages/AddProduct";
 import EditProduct from "./pages/EditProduct";
 import ViewProduct from "./pages/ViewProduct";
 import Cart from "./pages/Cart";
-import Auth from "./pages/Auth"
-
-// import Detail from "./pages/Detail";
+// import Auth from "./pages/Auth";
+import Register from "./components/auth/Register";
+import Login from "./components/auth/Login";
+//auth 
+import jwt_decode from "jwt-decode";
+import setAuthToken from "./utils/setAuthToken";
+import { setCurrentUser, logoutUser } from "./actions/authActions";
+import PrivateRoute from "./components/private-route/PrivateRoute";
+import Dashboard from "./components/dashboard/Dashboard";
+//redux
+import { Provider } from "react-redux";
+import store from "./store";
 import NoMatch from "./pages/NoMatch";
-// import Nav from "./components/Nav";
+
+// Check for token to keep user logged in
+if (localStorage.jwtToken) {
+  // Set auth token header auth
+  const token = localStorage.jwtToken;
+  setAuthToken(token);
+  // Decode token and get user info and exp
+  const decoded = jwt_decode(token);
+  // Set user and isAuthenticated
+  store.dispatch(setCurrentUser(decoded));
+// Check for expired token
+  const currentTime = Date.now() / 1000; // to get in milliseconds
+  if (decoded.exp < currentTime) {
+    // Logout user
+    store.dispatch(logoutUser());
+    // Redirect to login
+    window.location.href = "./login";
+  }
+}
 
 function App() {
   return (
-    <Router>
-      <div>
-        {/* <Nav /> */}
-        <Switch>
-          <Route exact path="/" component={Store} />
-
-          <Route exact path="/addProduct" component={AddProduct} />
-          <Route exact path="/editProduct/:id" component={EditProduct} />
-          <Route exact path="/product/:id" component={ViewProduct} />
-          <Route exact path="/cart" component={Cart} />
-          <Route exact path="/login" component={Auth} />
-
-          {/* <Route exact path="/books" component={Books} />
-          <Route exact path="/books/:id" component={Detail} /> */}
-          <Route component={NoMatch} />
-        </Switch>
-      </div>
-    </Router>
+    <Provider store={store}>
+      <Router>
+        <div>
+          {/* <Nav /> */}
+          <Switch>
+            <Route exact path="/" component={Store} />
+    
+            <Route exact path="/addProduct" component={AddProduct} />
+            <Route exact path="/editProduct/:id" component={EditProduct} />
+            <Route exact path="/product/:id" component={ViewProduct} />
+            <Route exact path="/cart" component={Cart} />
+            {/* <Route exact path="/login" component={Auth} /> */}
+            <Route exact path="/register" component={Register} />
+            <Route exact path="/login" component={Login} />
+            <PrivateRoute exact path="/dashboard" component={Dashboard} />
+            {/* <Route exact path="/books" component={Books} />
+            <Route exact path="/books/:id" component={Detail} /> */}
+            <Route component={NoMatch} />
+          </Switch>
+        </div>
+      </Router>
+    </Provider>
   );
 }
 
