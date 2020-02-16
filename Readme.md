@@ -5,23 +5,21 @@
 * This app is meant to showcase a mock online store with both admin, customer and guest user flows featuring: 
    * Full CRUD functionality for adding/editing products (admin privelege)
    * cart functionality, where a users e-cart is dynamically persisted to the database
-   * User Authentication (not quite here yet but soon to come)
+   * User Authentication 
    * query the database for products by name / category from the UI
-   * payment processing via stripe and tested using stripe test card #'s
-   * form validation during checkout (also soon to come)
+   * product details page for each product
+   * order summary page for orders 
+
 
 
 ## The Problem / Solution
 
-* most small business e-commerce is handled by "software-solutions" or content management systems such as Wordpress, Shopify, Bigcommerce etc... sites that  charge monthly memberships that vary depending on how much you sell or business support level. On the other ends of the spectrum we have craigslist for second hand goods, Facebook marketplace (sligtly more trustworthy second hand goods), ebay (my personal favorite because of its flexibility), and etsy for the homeade feel. These sites are cool because theyre accessable and free to the masses. My goal was to borrow the easy search/browsing functionality of a site like Amazon, make it look professional enough to seem like it may be hosted by a solution platform, and make it accessable to the home business masses. In one line: type in your business name, add products and you're good to go. 
 
 
 ## Technologies
 
 1. MERN stack
-2. Stripe,
-3. User Authentication (passport, bcrypt)
-4. ***Shipping API 
+2. User Authentication (passport, bcrypt)
 
 ## User Flow 
 
