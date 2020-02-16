@@ -4,9 +4,6 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "seed": "node scripts/seedDB.js",
-    "build": "cd client && npm run build",
-    "heroku-postbuild": "npm run build",
     "client-install": "npm install --prefix client",
     "start": "node server.js",
     "server": "nodemon server.js",
