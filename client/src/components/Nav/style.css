@@ -281,6 +281,34 @@ display: inline-block;
     }
 }
 
+.login-link {
+  position: absolute;
+  top: 1rem;
+  right: 2rem;
+  font-weight: 500;
+  color: white;
+}
+
+.login-link:hover {
+  cursor: pointer;
+  text-decoration: none;
+  color: lightgray;
+}
+
+.logout-button {
+  position: absolute;
+  top: 1rem;
+  right: 2rem;
+  color: white;
+  border: none;
+  background: black;
+  font-weight: 400; 
+}
+.logout-button:hover { 
+  cursor: pointer;
+  color: lightgray;
+}
+
 /* .navbar-top-left{
   displa
 } */

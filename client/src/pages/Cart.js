@@ -5,14 +5,17 @@ import Nav from "../components/Nav";
 import API from "../utils/API";
 import CartProduct from "../components/CartProduct/CartProduct";
 import classes from "./Cart.css"
-
+import Footer from "../components/Footer/Footer"
 const Cart = (props) => {
+
   const [state, setState] = useState({
     cartProducts: [],
     guestCartId: localStorage.getItem('guestCartId') || '',
     cartPrice: 0,
-    backToShopClicked: false
+    backToShopClicked: false,
+    checkoutClicked: false
   });
+
   useEffect(() => {
     let getGuestCartId = localStorage.getItem('guestCartId');
     API.getGuestCart(getGuestCartId).then(response => {
@@ -27,6 +30,7 @@ const Cart = (props) => {
 
     })
   }, []);
+
   const updateCartQuanity = (event) => {
     console.log("chage quanty to", event.target.value);
   }
@@ -36,6 +40,7 @@ const Cart = (props) => {
     alignItems: 'center',
     marginTop: '1rem'
   }
+
 const cartHeader = {
   marginBottom: '1.5rem'
 }
@@ -62,7 +67,7 @@ const backToShop = () => {
   setState({backToShopClicked: true})
 }
 
-  const updateCart = (updatedArr) => {
+const updateCart = (updatedArr) => {
 
     const updatedArrCopy = [...updatedArr];
     let postArr =[]
@@ -72,7 +77,7 @@ const backToShop = () => {
         quantity: updatedArrCopy[i].quantity
       }
     }
- 
+
     var postObj = {
       products: postArr
     }
@@ -92,11 +97,13 @@ const backToShop = () => {
 
       })
     })
-  }
-  const checkout = () => {
-    console.log("this is your page", props.history.location.pathname)
-  }
-  const deleteProductFromCart = (index) => {
+}
+const checkout = () => {
+  // console.log("this is your page", props.history.location.pathname)
+  setState({checkoutClicked: true})
+}
+
+const deleteProductFromCart = (index) => {
     console.log([...state.cartProducts]);
     const stateProductsCopy = [...state.cartProducts];
     stateProductsCopy.splice(index, 1);
@@ -117,36 +124,57 @@ const backToShop = () => {
       if(response.data.products !== undefined) {
         let totalPrice = 0;
         for(let i=0; i<response.data.products.length; i++) {
-
           totalPrice= totalPrice + response.data.products[i].item.price * response.data.products[i].quantity
         }
-        setState({cartProducts:  response.data.products, cartPrice: totalPrice, guestCartId: localStorage.getItem('guestCartId') || ''})
+        setState(
+            {
+              cartProducts:  response.data.products, 
+              cartPrice: totalPrice, 
+              guestCartId: localStorage.getItem('guestCartId') || ''
+            }
+        )
       }
       else return;
 
       })
     })
-  }
+}
   return(
-    
     state.backToShopClicked ? 
-   
         <Redirect to={{
           pathname: '/'
         }}/> : 
+          state.checkoutClicked ? 
+            <Redirect to={{
+            pathname: '/checkout'
+            }}/> :
     <div>
       <Nav location={props.history.location.pathname}/>
       <div style={cartContainer} className='Cart'>
       <h1 style={cartHeader}>Your Cart Total: $ {state.cartPrice} </h1>
       <div style={buttonContainer}>
-        <button style={completePurchaseButton} className='button' onClick={checkout}>Checkout</button>
-        <button style={backToShopButton} className='button' onClick={backToShop}>Back to shop</button>
+        <button 
+            style={completePurchaseButton} 
+            className='button' 
+            onClick={checkout}>
+              Checkout
+        </button>
+        <button 
+            style={backToShopButton} 
+            className='button' 
+            onClick={backToShop}>
+              Back to shop
+        </button>
       </div>
-
           {state.cartProducts.map( (product, index) => 
-            <CartProduct products={state.cartProducts} index={index} updateCart={updateCart} delete={deleteProductFromCart}/>
+            <CartProduct 
+                products={state.cartProducts} 
+                index={index} 
+                updateCart={updateCart} 
+                delete={deleteProductFromCart}/>
         )}
       </div>
+      <Footer/>
     </div>
    
   )

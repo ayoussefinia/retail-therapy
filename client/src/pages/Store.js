@@ -9,7 +9,7 @@ import '../components/Nav/style.css';
 import DeleteModal from '../components/modals/DeleteModal.js';
 import DeleteCard from '../components/Cards/DeleteCard.js';
 import Nav from "../components/Nav";
-
+import Footer from  "../components/Footer/Footer";
 class Products extends Component {
   state = {
     products: [],
@@ -246,7 +246,7 @@ searchCategory = (event) => {
         {this.state.products.map((product, index) => {
           
           return (
-          <div style={this.divStyles} className='card-container'>
+          <div style={this.divStyles} className='card-container mb-4'>
          
               <div className="card text-white bg-dark product-card m-2" style={this.cardStyles}  data-index={index}>
               <div className='pictureDiv'>
@@ -281,7 +281,7 @@ searchCategory = (event) => {
 
         })}
       </div>
-      
+      <Footer/>
       </div>
     );
   }

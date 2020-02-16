@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import {connect} from 'react-redux';
 import "./style.css";
 import {Input} from "../Form";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -6,6 +7,7 @@ import { faSearch, faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import API from '../../utils/API';
 import { Redirect } from 'react-router-dom';
 import Dropdown from 'react-dropdown';
+import {logoutUser} from '../../actions/authActions'
 import 'react-dropdown/style.css';
 
 
@@ -27,7 +29,8 @@ function Nav(props) {
 
   const [state, setState] = useState({
     productsInCart: 0
-  })
+  });
+
 
   const redirectAddProduct = () => {
     setState({addProductClicked: true})
@@ -96,21 +99,37 @@ function Nav(props) {
         </nav>
         </div>
         </div>
+        {props.auth.isAuthenticated ? <button onClick={props.logoutUser} className='logout-button'>Logout</button> :  <a href="/login" className='login-link'>Login</a>}
+       
+        
       </div>
       <nav className="navbar navbar-expand-lg navbar-dark nav-bar">
         <a className="navbar-brand" href="/">
           Shop
         </a>
+        
         <a className="navbar-brand" href="/addProduct" onClick={redirectAddProduct}>
           Add Product
+        </a> 
+        <a className="navbar-brand" href="/myProducts">
+          My Products
+        </a>
+        <a className="navbar-brand" href="/myOrders">
+          My Orders
         </a>
         {/* <a className="navbar-brand" href="/">
           Edit Product
         </a> */}
+    
       </nav>
 
     </div>
   );
 }
 
-export default Nav;
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+
+export default connect(mapStateToProps, {logoutUser})(Nav);
+

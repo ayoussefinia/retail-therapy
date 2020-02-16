@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import API from "../utils/API";
 import { Redirect } from 'react-router-dom';
 import Nav from "../components/Nav";
+import Footer from  "../components/Footer/Footer";
+import {connect} from "react-redux";
+
 class addProduct extends Component  {
   state= {
       name: '',
@@ -100,7 +103,8 @@ postProduct = () => {
     price: this.state.price,
     description: this.state.description,
     quantity: this.state.quantity,
-    imageUrls: imgArr
+    imageUrls: imgArr,
+    userId: this.props.auth.user.id
   }
   console.log(postObj)
   API.postProduct(postObj).then((dbProduct) => {
@@ -145,6 +149,7 @@ render() {
       </div>
       
     </div>
+    <Footer/>
     </div>
   )
   
@@ -154,4 +159,10 @@ render() {
 
 
 }
-export default addProduct;
+
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+
+
+export default connect(mapStateToProps)(addProduct);

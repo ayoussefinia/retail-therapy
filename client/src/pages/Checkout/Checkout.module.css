@@ -1,0 +1,129 @@
+.checkoutContainer {
+  min-height: 80vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.orderSummary {
+  width: 400px;
+  max-height: 180px;
+
+  margin-top: 2rem;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+}
+.orderSummaryHeader {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.cell {
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  width: 33.33%;
+  margin: 0;
+  text-align: center;
+}
+
+.row{
+  width: 100%;
+  display: flex;
+  border-bottom: 1px solid black;
+}
+
+
+.table {
+  width: 100%;
+}
+
+.checkoutFormDiv {
+  margin-top: 2rem;
+  width: 100%;
+  min-height: 50vh;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.checkoutForm {
+  width: 75%;
+  height: 100%;
+
+}
+
+.formTable {
+width: 100%;
+}
+
+.formCell {
+  width: 33.33%;
+}
+
+.formRow {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  text-align: center;
+}
+
+.card {
+  width: 80px;
+  border-radius: 5px;
+}
+
+.dash {
+  width: 25px;
+  text-align: center;
+}
+.cardRow {
+  display: flex;
+  margin-bottom: 1rem;
+}
+.name {
+  border-radius: 5px;
+}
+.orderHeader {
+  margin-top: 1rem;
+}
+.widthAdjustment {
+  max-width: 100px;
+}
+
+.buttonRow {
+width: 100%;
+display: flex;
+justify-content: center;
+margin-top: 3rem;
+margin-bottom: 3rem;
+}
+.orderButton {
+  color: white;
+  border: none;
+  background: black;
+  border-radius: 5px;
+  width: 100px;
+}
+.orderButton:hover {
+  background: white;
+  color: black;
+  border: 1px solid black;
+  cursor: pointer;
+}
+
+.purchaseImages {
+display: flex;
+flex-direction: column;
+align-items: center;
+width: 100%;
+
+}
+.image {
+  max-width: 23vw;
+  margin-bottom: 1.5rem;
+  border-radius: 5px;
+}

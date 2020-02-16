@@ -9,11 +9,13 @@ export default {
     return axios.post("/api/products", productData)
   },
   getProduct: function(id) {
-    console.log(id)
     return axios.get("/api/products/"+id)
   },
+  getUserProducts: function(id) {
+    return axios.get("/api/products/userId/"+id)
+  },
   postEditProduct: function(id, productData) {
-    console.log(id)
+
     return axios.post("/api/products/"+id, productData)
   },
   deleteProduct: function(id) {
@@ -24,7 +26,8 @@ export default {
   },
   postEditGuestCart: function(id, productData) {
     return axios.post('/api/cart/'+id, productData) 
-  }, getGuestCart: function(id) {
+  }, 
+  getGuestCart: function(id) {
     return axios.get('/api/cart/'+id);
   },
   searchProducts: function(searchString) {
