@@ -5,7 +5,7 @@ import Nav from "../components/Nav";
 import API from "../utils/API";
 import AddToCartModal from "../components/modals/AddCartModal";
 import AddCartCard from "../components/Cards/AddCartCard";
-const ViewProduct = (props) => {
+const viewProduct = (props) => {
   const containerStyles = {
     height: '100vh',
     padding: '1rem',
@@ -226,4 +226,4 @@ const ViewProduct = (props) => {
   )
 }
 
-export default ViewProduct;
+export default viewProduct;
