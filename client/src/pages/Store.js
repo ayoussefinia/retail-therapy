@@ -26,7 +26,8 @@ class Products extends Component {
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginTop: '1rem'
+    margin: '1rem',
+  
   }
   descStyles = {
     height: '50%',
