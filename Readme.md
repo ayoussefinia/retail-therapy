@@ -6,12 +6,12 @@
 
 ### Guest Credentials: 
 
-##User Name: asdf@asdf.com
-##Pass: asdfasdf
+## User Name: asdf@asdf.com
+## Pass: asdfasdf
 
 #### App Description: 
 
-This app is a mock online  store where  a user can browse/search products from the home page, add products to their cart and modify their cart (tremove or change the quantity of a particular product).  Authenticated users can add their own products or edit/delete products they have added. The checkout page uses simple form input validation. The user can also see a list of orders they've made and the dates/times the order was made. 
+This app is a mock online  store where  a user can browse/search products from the home page, add products to their cart and modify their cart (remove or change the quantity of a particular product).  Authenticated users can add their own products or edit/delete products they have added. The checkout page uses simple form input validation. The user can also see a list of orders they've made and the dates/times the order was made. 
 
 
 #### Typical User Flow
