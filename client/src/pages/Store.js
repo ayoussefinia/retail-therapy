@@ -23,7 +23,9 @@ class Products extends Component {
 
   divStyles = {
     display: 'flex',
-    justifyContent: 'center',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'space-between',
     marginTop: '1rem'
   }
   descStyles = {
@@ -58,7 +60,7 @@ class Products extends Component {
   cardButtonDiv = {
     width: '100%',
     display: 'flex',
-    justifyContent: 'center'
+    justifyContent: 'center',
   }
   productStats = {
     padding: '1rem'
@@ -267,12 +269,10 @@ searchCategory = (event) => {
                     <button style={this.cardButton} data-ref={index} data-id={product._id} onClick={this.viewProduct} className='button'>See More</button>
                 </div>
 
-                <div style={this.iconDiv}>
-                  {/* <FontAwesomeIcon icon={faCartPlus} size="2x"  data-id={product._id} className='icon' /> */}
+                {/* <div style={this.iconDiv}>
                   <FontAwesomeIcon icon={faEdit} size="2x" data-id={product._id} data-number={index} className='icon' onClick={this.editProduct}/>
                   <FontAwesomeIcon icon={faTrash} size="2x" data-id={product._id} className='icon' onClick={this.deleteProductModalShow} data-number={index}/>
-                  {/* <a href="#" className="card-link">Another link</a> */}
-                </div>
+                </div> */}
               </div>
          
           </div>

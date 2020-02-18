@@ -4,7 +4,7 @@ import { Redirect } from 'react-router-dom';
 import Nav from "../components/Nav";
 import API from "../utils/API";
 import CartProduct from "../components/CartProduct/CartProduct";
-import classes from "./Cart.css"
+import "./Cart.css"
 import Footer from "../components/Footer/Footer"
 const Cart = (props) => {
 
@@ -147,10 +147,11 @@ const deleteProductFromCart = (index) => {
           state.checkoutClicked ? 
             <Redirect to={{
             pathname: '/checkout'
+
             }}/> :
     <div>
       <Nav location={props.history.location.pathname}/>
-      <div style={cartContainer} className='Cart'>
+      <div style={cartContainer} className='Cart cartContainer'>
       <h1 style={cartHeader}>Your Cart Total: $ {state.cartPrice} </h1>
       <div style={buttonContainer}>
         <button 

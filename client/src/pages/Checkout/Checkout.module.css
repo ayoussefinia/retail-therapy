@@ -71,9 +71,15 @@ width: 100%;
   text-align: center;
 }
 
-.card {
+.cardValid {
   width: 80px;
   border-radius: 5px;
+}
+
+.cardInvalid {
+  width: 80px;
+  border-radius: 5px;
+  border: 1px solid red;
 }
 
 .dash {
@@ -125,5 +131,13 @@ width: 100%;
 .image {
   max-width: 23vw;
   margin-bottom: 1.5rem;
+  border-radius: 5px;
+}
+
+
+
+.invalid {
+  outline: red;
+  border: 1px solid red;
   border-radius: 5px;
 }

@@ -1,0 +1,11 @@
+.thankYouContainer {
+  width: 100%;
+  min-height: 80vh;
+  display: flex;
+  justify-content: center;
+}
+
+.thankYouMessage {
+  text-align: center;
+  margin-top: 2rem;
+}

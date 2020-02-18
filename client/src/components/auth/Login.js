@@ -54,6 +54,9 @@ return (
               home
             </Link>
             <div className="col s12" style={{ paddingLeft: "11.250px" }}>
+            <h3 className="mb-2">If you  dont care to register Sign in as Me:</h3>
+            <h4><strong>User: </strong>asdf@asdf.com</h4>
+            <h4><strong>Pass: </strong>asdfasdf</h4>
               <h4>
                 <b>Login</b> below
               </h4>

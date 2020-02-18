@@ -8,6 +8,7 @@ import MyProducts from "./pages/MyProducts/MyProducts"
 import ViewProduct from "./pages/ViewProduct";
 import Checkout from "./pages/Checkout/Checkout"
 import Cart from "./pages/Cart";
+import ThankYou from "./pages/ThankYou/ThankYou";
 // import Auth from "./pages/Auth";
 import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
@@ -62,6 +63,7 @@ function App() {
             {/* <Route exact path="/login" component={Auth} /> */}
             <Route exact path="/register" component={Register} />
             <Route exact path="/login" component={Login} />
+            <Route exact path="/thankYou" component={ThankYou} />
             <PrivateRoute exact path="/dashboard" component={Dashboard} />
             {/* <Route exact path="/books" component={Books} />
             <Route exact path="/books/:id" component={Detail} /> */}
