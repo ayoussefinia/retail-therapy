@@ -249,7 +249,7 @@ searchCategory = (event) => {
         {this.state.products.map((product, index) => {
           
           return (
-          <div style={this.divStyles} className='card-container mb-4'>
+          <div style={this.divStyles} className='card-container mb-4' key={index}>
          
               <div className="card text-white bg-dark product-card m-2" style={this.cardStyles}  data-index={index}>
               <div className='pictureDiv'>

@@ -426,7 +426,7 @@ postOrder() {
     if(this.props.auth.user.id) {
         orderObj.userId = this.props.auth.user.id;
         orderObj.products = this.state.cartProducts;
-        console.log('*****Order Obj********', orderObj)
+        // console.log('*****Order Obj********', orderObj)
         API.postOrder(orderObj).then(res => {
             const cartId = localStorage.getItem('guestCartId')
             const postObj = {products:[]}
@@ -445,13 +445,13 @@ postOrder() {
 
 
   getSum = (total, num) => {
-    console.log(num)
+    // console.log(num)
     return total + num.item.price;
   }
 
   componentDidMount() {
     const cartId = localStorage.getItem('userCartId') || localStorage.getItem('guestCartId') || '';    API.getGuestCart(cartId).then(res => {
-      console.log("*********MYProds********", res);
+    //   console.log("*********MYProds********", res);
       const prods = res.data.products;
       this.setState(
         {
@@ -469,357 +469,362 @@ postOrder() {
         <Nav/>
         <div className={classes.checkoutContainer}>
         <h4 className={classes.orderSummaryHeader}>Order Summary</h4>
+
         <div className={classes.orderSummary}>
-       
-        <table className={classes.table}>
-            <tr className={classes.row}>
-                <th className={classes.cell}>Items</th>
-                <th className={classes.cell}>quantity</th>
-                <th className={classes.cell}>price</th>
-            </tr>
-            {
-              this.state.cartProducts.map(product => {
-                return(
-                <tr className={classes.row}>
-                    <td className={classes.cell} >{product.item.name}</td>
-                    <td className={classes.cell} >{product.quantity}</td>
-                    <td className={classes.cell} >{product.item.price}</td>
-                </tr>
-                  
-                )
-              })
-            }
-            <tr className={classes.row}>
-                <td className={classes.cell}></td>
-                <td className={classes.cell}>
-                <strong>
-                   Total:
-                </strong>
-                </td>
-                <td className={classes.cell}>
-                {this.state.cartProducts.reduce(this.getSum, 0)}
-                </td>
-            </tr>
-        </table>
+            <table className={classes.table}>
+                <tbody>
+                    <tr className={classes.row}>
+                        <th className={classes.cell}>Items</th>
+                        <th className={classes.cell}>quantity</th>
+                        <th className={classes.cell}>price</th>
+                    </tr>
+                    {
+                    this.state.cartProducts.map((product, index) => {
+                        return(
+                        <tr className={classes.row} key={index}>
+                            <td className={classes.cell} >{product.item.name}</td>
+                            <td className={classes.cell} >{product.quantity}</td>
+                            <td className={classes.cell} >{product.item.price}</td>
+                        </tr>
+                        
+                        )
+                    })
+                    }
+                    <tr className={classes.row}>
+                        <td className={classes.cell}></td>
+                        <td className={classes.cell}>
+                        <strong>
+                        Total:
+                        </strong>
+                        </td>
+                        <td className={classes.cell}>
+                        {this.state.cartProducts.reduce(this.getSum, 0)}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
+
         <div className={classes.checkoutFormDiv}>
         <h4 className={classes.orderSummaryHeader}>Dummy Personal Info: </h4>
         
             <form action="" className={classes.checkoutForm}>
-            <tr className={classes.formRow}>
-                <td>First Name:</td>
-                <td>Last Name:</td>
-                <td></td>
-            </tr>
-            <tr className={classes.formRow}>
-              <td>
-                  <input 
-                      className={!this.state.orderForm.firstName.valid 
-                                 && this.state.orderForm.firstName.touched
-                                 ?  classes.invalid : classes.valid }
-                      value={this.state.orderForm.firstName.value}
-                      onChange={(event) => this.inputChangedHandler(event, 'firstName')}
-                    />
-              </td>
-              <td>
-                  <input 
-                      className={!this.state.orderForm.lastName.valid 
-                                 && this.state.orderForm.lastName.touched
-                                 ?  classes.invalid : classes.valid }
-                      value={this.state.orderForm.lastName.value}
-                      onChange={(event) => this.inputChangedHandler(event, 'lastName')}
-                  />
-              </td>
-              <td></td>
-            </tr>
-            <tr className={classes.formRow}>
-                <td>e-mail:</td>
-                <td>phone:</td>
-                <td></td>
-            </tr>
-            <tr className={classes.formRow}>
+              
+                    <tr className={classes.formRow}>
+                        <td>First Name:</td>
+                        <td>Last Name:</td>
+                        <td></td>
+                    </tr>
+            
+                <tr className={classes.formRow}>
                 <td>
                     <input 
-                        className={!this.state.orderForm.email.valid 
-                          && this.state.orderForm.email.touched
-                          ?  classes.invalid : classes.valid }
-                        value={this.state.orderForm.email.value}
-                        onChange={(event) => this.inputChangedHandler(event, 'email')}
+                        className={!this.state.orderForm.firstName.valid 
+                                    && this.state.orderForm.firstName.touched
+                                    ?  classes.invalid : classes.valid }
+                        value={this.state.orderForm.firstName.value}
+                        onChange={(event) => this.inputChangedHandler(event, 'firstName')}
+                        />
+                </td>
+                <td>
+                    <input 
+                        className={!this.state.orderForm.lastName.valid 
+                                    && this.state.orderForm.lastName.touched
+                                    ?  classes.invalid : classes.valid }
+                        value={this.state.orderForm.lastName.value}
+                        onChange={(event) => this.inputChangedHandler(event, 'lastName')}
                     />
+                </td>
+                <td></td>
+                </tr>
+                <tr className={classes.formRow}>
+                    <td>e-mail:</td>
+                    <td>phone:</td>
+                    <td></td>
+                </tr>
+                <tr className={classes.formRow}>
+                    <td>
+                        <input 
+                            className={!this.state.orderForm.email.valid 
+                            && this.state.orderForm.email.touched
+                            ?  classes.invalid : classes.valid }
+                            value={this.state.orderForm.email.value}
+                            onChange={(event) => this.inputChangedHandler(event, 'email')}
+                        />
 
-                </td>
-                <td>
-                    <input 
-                        className={!this.state.orderForm.phone.valid 
-                          && this.state.orderForm.phone.touched
-                          ?  classes.invalid : classes.valid }
-                        value={this.state.orderForm.phone.value}
-                        onChange={(event) => this.inputChangedHandler(event, 'phone')}
-                    />
-                </td>
-                <td></td>
-            </tr>
-            <h4 className={classes.orderHeader}>Shipping Address: </h4>
-            <table className={classes.formTable}>
+                    </td>
+                    <td>
+                        <input 
+                            className={!this.state.orderForm.phone.valid 
+                            && this.state.orderForm.phone.touched
+                            ?  classes.invalid : classes.valid }
+                            value={this.state.orderForm.phone.value}
+                            onChange={(event) => this.inputChangedHandler(event, 'phone')}
+                        />
+                    </td>
+                    <td></td>
+                </tr>
+                <h4 className={classes.orderHeader}>Shipping Address: </h4>
+                <table className={classes.formTable}>
+                
+                <tr className={classes.formRow}>
+                    <td className={classes.formCell}>address line 1:</td>
+                    <td className={classes.formCell}>city:</td>
+                    <td className={classes.formCell}>state (e.g. TX or NY):</td>
+                </tr>
+                <tr className={classes.formRow}>
+                    <td>
+                        <input 
+                            className={!this.state.orderForm.shippingAddressOne.valid 
+                            && this.state.orderForm.shippingAddressOne.touched
+                            ?  classes.invalid : classes.valid }
+                            value={this.state.orderForm.shippingAddressOne.value}
+                            onChange={(event) => this.inputChangedHandler(event, 'shippingAddressOne')}
+                        />
+                    </td>
+                    <td>
+                        <input  
+                            className={!this.state.orderForm.shippingCity.valid 
+                            && this.state.orderForm.shippingCity.touched
+                            ?  classes.invalid : classes.valid }
+                            value={this.state.orderForm.shippingCity.value}
+                            touched={this.state.orderForm.shippingCity.touched}
+                            onChange={(event) => this.inputChangedHandler(event, 'shippingCity')}
+                        />
+                    </td>
+                    <td> 
+                        <input 
+                            className={!this.state.orderForm.shippingState.valid 
+                            && this.state.orderForm.shippingState.touched
+                            ?  classes.invalid : classes.valid }
+                            value={this.state.orderForm.shippingState.value}
+                            onChange={(event) => this.inputChangedHandler(event, 'shippingState')}
+                        />
+                    </td>
+                </tr>
+                <tr className={classes.formRow}>
+                    <td className={classes.formCell}>address line 2:</td>
+                    <td className={classes.formCell}>zip:</td>
+                    <td className={classes.formCell}></td>
+                </tr>
+                <tr className={classes.formRow}>
+                    <td className={classes.formCell}>
+                        <input 
+                            className={!this.state.orderForm.shippingAddressTwo.valid 
+                                && this.state.orderForm.shippingAddressTwo.touched
+                                ?  classes.invalid : classes.valid }
+                            value={this.state.orderForm.shippingAddressTwo.value}
+                            onChange={(event) => this.inputChangedHandler(event, 'shippingAddressTwo')}
+                        />
+                    </td>
+                    <td className={classes.formCell}>
+                        <input 
+                            className={!this.state.orderForm.zipCode.valid 
+                            && this.state.orderForm.zipCode.touched
+                            ?  classes.invalid : classes.valid }
+                            value={this.state.orderForm.zipCode.value}
+                            onChange={(event) => this.inputChangedHandler(event, 'zipCode')}
+                        />
+                    </td>
+                    <td className={classes.formCell}></td>
             
-            <tr className={classes.formRow}>
-                <td className={classes.formCell}>address line 1:</td>
-                <td className={classes.formCell}>city:</td>
-                <td className={classes.formCell}>state (e.g. TX or NY):</td>
-            </tr>
-            <tr className={classes.formRow}>
-                <td>
-                    <input 
-                        className={!this.state.orderForm.shippingAddressOne.valid 
-                          && this.state.orderForm.shippingAddressOne.touched
-                          ?  classes.invalid : classes.valid }
-                        value={this.state.orderForm.shippingAddressOne.value}
-                        onChange={(event) => this.inputChangedHandler(event, 'shippingAddressOne')}
-                    />
-                </td>
-                <td>
-                    <input  
-                        className={!this.state.orderForm.shippingCity.valid 
-                          && this.state.orderForm.shippingCity.touched
-                          ?  classes.invalid : classes.valid }
-                        value={this.state.orderForm.shippingCity.value}
-                        touched={this.state.orderForm.shippingCity.touched}
-                        onChange={(event) => this.inputChangedHandler(event, 'shippingCity')}
-                    />
-                </td>
-                <td> 
-                    <input 
-                        className={!this.state.orderForm.shippingState.valid 
-                          && this.state.orderForm.shippingState.touched
-                          ?  classes.invalid : classes.valid }
-                        value={this.state.orderForm.shippingState.value}
-                        onChange={(event) => this.inputChangedHandler(event, 'shippingState')}
-                    />
-                </td>
-            </tr>
-            <tr className={classes.formRow}>
-                <td className={classes.formCell}>address line 2:</td>
-                <td className={classes.formCell}>zip:</td>
-                <td className={classes.formCell}></td>
-            </tr>
-            <tr className={classes.formRow}>
-                <td className={classes.formCell}>
-                      <input 
-                          className={!this.state.orderForm.shippingAddressTwo.valid 
-                            && this.state.orderForm.shippingAddressTwo.touched
+                </tr>
+                <h4 className={classes.orderHeader}>Billing Address: </h4>
+                <tr className={classes.cardRow}>
+                <td ><strong>Same as shipping</strong></td>
+                <td><input 
+                        type="checkbox"
+                        onChange={() => this.checkboxChecked()}
+                /></td>
+                </tr>
+                
+                <tr className={classes.formRow}>
+                    <td className={classes.formCell}>address line 1:</td>
+                    <td className={classes.formCell}>city:</td>
+                    <td className={classes.formCell}>statestate (e.g. TX or NY):</td>
+                </tr>
+                <tr className={classes.formRow}>
+                    <td>
+                        <input 
+                            className={!this.state.orderForm.billingAddressOne.valid 
+                            && this.state.orderForm.billingAddressOne.touched
                             ?  classes.invalid : classes.valid }
-                          value={this.state.orderForm.shippingAddressTwo.value}
-                          onChange={(event) => this.inputChangedHandler(event, 'shippingAddressTwo')}
-                      />
-                </td>
-                <td className={classes.formCell}>
-                    <input 
-                        className={!this.state.orderForm.zipCode.valid 
-                          && this.state.orderForm.zipCode.touched
-                          ?  classes.invalid : classes.valid }
-                        value={this.state.orderForm.zipCode.value}
-                        onChange={(event) => this.inputChangedHandler(event, 'zipCode')}
-                    />
-                </td>
-                <td className={classes.formCell}></td>
-          
-            </tr>
-            <h4 className={classes.orderHeader}>Billing Address: </h4>
-            <tr className={classes.cardRow}>
-              <td ><strong>Same as shipping</strong></td>
-              <td><input 
-                    type="checkbox"
-                    onChange={() => this.checkboxChecked()}
-              /></td>
-            </tr>
+                            value={this.state.checkboxChecked ? this.state.orderForm.shippingAddressOne.value : this.state.orderForm.billingAddressOne.value}
+                            onChange={(event) => this.inputChangedHandler(event, 'billingAddressOne')}
+                        />
+                    </td>
+                    <td>
+                        <input
+                            className={!this.state.orderForm.billingCity.valid 
+                            && this.state.orderForm.billingCity.touched
+                            ?  classes.invalid : classes.valid }
+                            value={this.state.checkboxChecked? this.state.orderForm.shippingCity.value : this.state.orderForm.billingCity.value}
+                            onChange={(event) => this.inputChangedHandler(event, 'billingCity')}
+                        />
+                    </td>
+                    <td>
+                        <input 
+                            className={!this.state.orderForm.billingState.valid 
+                            && this.state.orderForm.billingState.touched
+                            ?  classes.invalid : classes.valid }
+                            value={this.state.checkboxChecked? this.state.orderForm.shippingState.value : this.state.orderForm.billingState.value}
+                            onChange={(event) => this.inputChangedHandler(event, 'billingState')}
+                        />
+                    </td>
+                </tr>
+                <tr className={classes.formRow}>
+                    <td className={classes.formCell}>address line 2:</td>
+                    <td className={classes.formCell}>zip:</td>
+                    <td className={classes.formCell}></td>
+                </tr>
+                <tr className={classes.formRow}>
+                    <td className={classes.formCell}>
+                        <input 
+                            className={!this.state.orderForm.billingAddressTwo.valid 
+                                && this.state.orderForm.billingAddressTwo.touched
+                                ?  classes.invalid : classes.valid }
+                            value={this.state.checkboxChecked? this.state.orderForm.shippingAddressTwo.value : this.state.orderForm.billingAddressTwo.value}
+                            onChange={(event) => this.inputChangedHandler(event, 'billingAddressTwo')}
+                        />
+                    </td>
+                    <td className={classes.formCell}>
+                        <input 
+                            className={!this.state.orderForm.billingZipCode.valid 
+                            && this.state.orderForm.billingZipCode.touched
+                            ?  classes.invalid : classes.valid }
+                            value={this.state.checkboxChecked? this.state.orderForm.zipCode.value : this.state.orderForm.billingZipCode.value}
+                            onChange={(event) => this.inputChangedHandler(event, 'billingZipCode')}
+                        />
+                    </td>
+                    <td className={classes.formCell}></td>
             
-            <tr className={classes.formRow}>
-                <td className={classes.formCell}>address line 1:</td>
-                <td className={classes.formCell}>city:</td>
-                <td className={classes.formCell}>statestate (e.g. TX or NY):</td>
-            </tr>
-            <tr className={classes.formRow}>
-                <td>
-                    <input 
-                        className={!this.state.orderForm.billingAddressOne.valid 
-                          && this.state.orderForm.billingAddressOne.touched
-                          ?  classes.invalid : classes.valid }
-                        value={this.state.checkboxChecked ? this.state.orderForm.shippingAddressOne.value : this.state.orderForm.billingAddressOne.value}
-                        onChange={(event) => this.inputChangedHandler(event, 'billingAddressOne')}
-                    />
-                </td>
-                <td>
-                    <input
-                        className={!this.state.orderForm.billingCity.valid 
-                          && this.state.orderForm.billingCity.touched
-                          ?  classes.invalid : classes.valid }
-                        value={this.state.checkboxChecked? this.state.orderForm.shippingCity.value : this.state.orderForm.billingCity.value}
-                        onChange={(event) => this.inputChangedHandler(event, 'billingCity')}
-                    />
-                </td>
-                <td>
-                    <input 
-                        className={!this.state.orderForm.billingState.valid 
-                          && this.state.orderForm.billingState.touched
-                          ?  classes.invalid : classes.valid }
-                        value={this.state.checkboxChecked? this.state.orderForm.shippingState.value : this.state.orderForm.billingState.value}
-                        onChange={(event) => this.inputChangedHandler(event, 'billingState')}
-                    />
-                </td>
-            </tr>
-            <tr className={classes.formRow}>
-                <td className={classes.formCell}>address line 2:</td>
-                <td className={classes.formCell}>zip:</td>
-                <td className={classes.formCell}></td>
-            </tr>
-            <tr className={classes.formRow}>
-                <td className={classes.formCell}>
-                     <input 
-                        className={!this.state.orderForm.billingAddressTwo.valid 
-                            && this.state.orderForm.billingAddressTwo.touched
-                            ?  classes.invalid : classes.valid }
-                        value={this.state.checkboxChecked? this.state.orderForm.shippingAddressTwo.value : this.state.orderForm.billingAddressTwo.value}
-                        onChange={(event) => this.inputChangedHandler(event, 'billingAddressTwo')}
-                      />
-                </td>
-                <td className={classes.formCell}>
-                    <input 
-                        className={!this.state.orderForm.billingZipCode.valid 
-                          && this.state.orderForm.billingZipCode.touched
-                          ?  classes.invalid : classes.valid }
-                        value={this.state.checkboxChecked? this.state.orderForm.zipCode.value : this.state.orderForm.billingZipCode.value}
-                        onChange={(event) => this.inputChangedHandler(event, 'billingZipCode')}
-                    />
-                </td>
-                <td className={classes.formCell}></td>
-          
-            </tr>
-            <h4 className={classes.orderSummaryHeader}>Dummy Card Data: </h4>
-            <tr className={classes.formRow}>
-                <td className={classes.formCell}></td>
-                <td className={classes.formCell}>Name On Card:</td>
-                <td className={classes.formCell}></td>
-                <td className={classes.formCell}></td>
-             
-            </tr>
-            <tr className={classes.formRow}>
-                <td className={classes.formCell}>First:</td>
-                <td className={classes.formCell}>Last:</td>
-                <td className={classes.formCell}></td>
-            </tr>
-            <tr className={classes.formRow}>
-                <td className={classes.formCell}>
-                     <input 
-                        className={!this.state.orderForm.cardFirstName.valid 
-                            && this.state.orderForm.cardFirstName.touched
-                            ?  classes.invalid : classes.valid }
-                        value={this.state.orderForm.cardFirstName.value}
-                        onChange={(event) => this.inputChangedHandler(event, 'cardFirstName')}
-                      />
-                </td>
-                <td className={classes.formCell}>
-                     <input 
-                        className={!this.state.orderForm.cardLastName.valid 
-                            && this.state.orderForm.cardLastName.touched
-                            ?  classes.invalid : classes.valid }
-                        value={this.state.orderForm.cardLastName.value}
-                        onChange={(event) => this.inputChangedHandler(event, 'cardLastName')}
-                     />
-                </td>
-                <td className={classes.formCell}></td>
-            </tr>
+                </tr>
+                <h4 className={classes.orderSummaryHeader}>Dummy Card Data: </h4>
+                <tr className={classes.formRow}>
+                    <td className={classes.formCell}></td>
+                    <td className={classes.formCell}>Name On Card:</td>
+                    <td className={classes.formCell}></td>
+                    <td className={classes.formCell}></td>
+                
+                </tr>
+                <tr className={classes.formRow}>
+                    <td className={classes.formCell}>First:</td>
+                    <td className={classes.formCell}>Last:</td>
+                    <td className={classes.formCell}></td>
+                </tr>
+                <tr className={classes.formRow}>
+                    <td className={classes.formCell}>
+                        <input 
+                            className={!this.state.orderForm.cardFirstName.valid 
+                                && this.state.orderForm.cardFirstName.touched
+                                ?  classes.invalid : classes.valid }
+                            value={this.state.orderForm.cardFirstName.value}
+                            onChange={(event) => this.inputChangedHandler(event, 'cardFirstName')}
+                        />
+                    </td>
+                    <td className={classes.formCell}>
+                        <input 
+                            className={!this.state.orderForm.cardLastName.valid 
+                                && this.state.orderForm.cardLastName.touched
+                                ?  classes.invalid : classes.valid }
+                            value={this.state.orderForm.cardLastName.value}
+                            onChange={(event) => this.inputChangedHandler(event, 'cardLastName')}
+                        />
+                    </td>
+                    <td className={classes.formCell}></td>
+                </tr>
+                
+                <tr className={classes.formRow}>
+                    <td className={classes.formCell}>Card Number:</td>
+                    <td className={classes.formCell}></td>
+                    <td className={classes.formCell}></td>
+                </tr>
+                <tr className={classes.cardRow}>
+                    <td>
+                        <input 
+                            className={!this.state.orderForm.firstFour.valid 
+                                && this.state.orderForm.firstFour.touched
+                                ?  classes.cardInvalid : classes.cardValid }
+                            value={this.state.orderForm.firstFour.value}
+                            onChange={(event) => this.inputChangedHandler(event, 'firstFour')}
+                        />
+                    </td>
+                    <td className={classes.dash}>-</td>
+                    <td>
+                        <input 
+                            className={!this.state.orderForm.secondFour.valid 
+                                && this.state.orderForm.secondFour.touched
+                                ?  classes.cardInvalid : classes.cardValid }
+                            value={this.state.orderForm.secondFour.value}
+                            onChange={(event) => this.inputChangedHandler(event, 'secondFour')}
+                        />
+                    </td>
+                    <td className={classes.dash}>-</td>
+                    <td>
+                        <input 
+                            className={!this.state.orderForm.thirdFour.valid 
+                                && this.state.orderForm.thirdFour.touched
+                                ?  classes.cardInvalid : classes.cardValid }
+                            value={this.state.orderForm.thirdFour.value}
+                            onChange={(event) => this.inputChangedHandler(event, 'thirdFour')}
+                        />
+                    </td>
+                    <td className={classes.dash}>-</td>
+                    <td>
+                        <input 
+                            className={!this.state.orderForm.fourthFour.valid 
+                                && this.state.orderForm.fourthFour.touched
+                                ?  classes.cardInvalid : classes.cardValid }
+                            value={this.state.orderForm.fourthFour.value}
+                            onChange={(event) => this.inputChangedHandler(event, 'fourthFour')}
+                        />
+                    </td>
+                </tr>
             
-            <tr className={classes.formRow}>
-                <td className={classes.formCell}>Card Number:</td>
-                <td className={classes.formCell}></td>
-                <td className={classes.formCell}></td>
-            </tr>
-            <tr className={classes.cardRow}>
-                <td>
-                    <input 
-                        className={!this.state.orderForm.firstFour.valid 
-                            && this.state.orderForm.firstFour.touched
-                            ?  classes.cardInvalid : classes.cardValid }
-                        value={this.state.orderForm.firstFour.value}
-                        onChange={(event) => this.inputChangedHandler(event, 'firstFour')}
-                    />
-                </td>
-                <td className={classes.dash}>-</td>
-                <td>
-                    <input 
-                        className={!this.state.orderForm.secondFour.valid 
-                            && this.state.orderForm.secondFour.touched
-                            ?  classes.cardInvalid : classes.cardValid }
-                        value={this.state.orderForm.secondFour.value}
-                        onChange={(event) => this.inputChangedHandler(event, 'secondFour')}
-                    />
-                </td>
-                <td className={classes.dash}>-</td>
-                <td>
-                    <input 
-                        className={!this.state.orderForm.thirdFour.valid 
-                            && this.state.orderForm.thirdFour.touched
-                            ?  classes.cardInvalid : classes.cardValid }
-                        value={this.state.orderForm.thirdFour.value}
-                        onChange={(event) => this.inputChangedHandler(event, 'thirdFour')}
-                    />
-                </td>
-                <td className={classes.dash}>-</td>
-                <td>
-                    <input 
-                        className={!this.state.orderForm.fourthFour.valid 
-                            && this.state.orderForm.fourthFour.touched
-                            ?  classes.cardInvalid : classes.cardValid }
-                        value={this.state.orderForm.fourthFour.value}
-                        onChange={(event) => this.inputChangedHandler(event, 'fourthFour')}
-                    />
-                </td>
-            </tr>
-           
-            <tr className={classes.cardRow}>
-                <td>Security</td>
-                <td className={classes.dash}></td>
-                <td className={classes.dash}></td>  
-                <td className={classes.dash}></td>
-                <td ></td>
-                <td></td>
-                <td className={classes.dash}>Expiration</td>
-            </tr>
-            <tr className={classes.cardRow}>
-                <td>
-                    <input 
-                        className={!this.state.orderForm.security.valid 
-                            && this.state.orderForm.security.touched
-                            ?  classes.cardInvalid : classes.cardValid }
-                        value={this.state.orderForm.security.value}
-                        onChange={(event) => this.inputChangedHandler(event, 'security')}
-                    />
-                </td>
-                <td className={classes.dash}></td>
-                <td></td>
-                <td className={classes.dash}></td>
-                <td>
-                    <input 
-                        className={!this.state.orderForm.expOne.valid 
-                            && this.state.orderForm.expOne.touched
-                            ?  classes.cardInvalid : classes.cardValid }
-                        value={this.state.orderForm.expOne.value}
-                        onChange={(event) => this.inputChangedHandler(event, 'expOne')}
-                    />
-                </td>
-                <td className={classes.dash}>/</td>
-                <td>
-                    <input 
-                        className={!this.state.orderForm.expTwo.valid 
-                            && this.state.orderForm.expTwo.touched
-                            ?  classes.cardInvalid : classes.cardValid }
-                        value={this.state.orderForm.expTwo.value}
-                        onChange={(event) => this.inputChangedHandler(event, 'expTwo')}
-                    />
-                </td>
-            </tr>
-           
-            </table>
+                <tr className={classes.cardRow}>
+                    <td>Security</td>
+                    <td className={classes.dash}></td>
+                    <td className={classes.dash}></td>  
+                    <td className={classes.dash}></td>
+                    <td ></td>
+                    <td></td>
+                    <td className={classes.dash}>Expiration</td>
+                </tr>
+                <tr className={classes.cardRow}>
+                    <td>
+                        <input 
+                            className={!this.state.orderForm.security.valid 
+                                && this.state.orderForm.security.touched
+                                ?  classes.cardInvalid : classes.cardValid }
+                            value={this.state.orderForm.security.value}
+                            onChange={(event) => this.inputChangedHandler(event, 'security')}
+                        />
+                    </td>
+                    <td className={classes.dash}></td>
+                    <td></td>
+                    <td className={classes.dash}></td>
+                    <td>
+                        <input 
+                            className={!this.state.orderForm.expOne.valid 
+                                && this.state.orderForm.expOne.touched
+                                ?  classes.cardInvalid : classes.cardValid }
+                            value={this.state.orderForm.expOne.value}
+                            onChange={(event) => this.inputChangedHandler(event, 'expOne')}
+                        />
+                    </td>
+                    <td className={classes.dash}>/</td>
+                    <td>
+                        <input 
+                            className={!this.state.orderForm.expTwo.valid 
+                                && this.state.orderForm.expTwo.touched
+                                ?  classes.cardInvalid : classes.cardValid }
+                            value={this.state.orderForm.expTwo.value}
+                            onChange={(event) => this.inputChangedHandler(event, 'expTwo')}
+                        />
+                    </td>
+                </tr>
+            
+                </table>
             </form>
             <div className={classes.buttonRow}>
              <td>
