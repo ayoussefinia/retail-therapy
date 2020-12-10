@@ -37,7 +37,9 @@ app.use("/api/users", users);
 app.use(routes);
 
 // Connect to the Mongo DB
-mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/store");
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/store")
+.then(() => {console.log('mongodb connected')})
+.catch((err) => {console.log('error connecting to mongoDB: ', err)});
 
 // Start the API server
 app.listen(PORT, function() {
