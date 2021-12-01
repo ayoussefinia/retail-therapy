@@ -36,7 +36,7 @@ app.use("/api/users", users);
 // Add routes, both API and view
 app.use(routes);
 
-mongoose.connect("mongodb+srv://ayoussefinia:"+process.env.pass+"@cluster0.uescv.mongodb.net/myFirstDatabase?retryWrites=true&w=majority");
+mongoose.connect("mongodb+srv://ayoussefinia:"+process.env.pass+"@cluster0.uescv.mongodb.net/Store?retryWrites=true&w=majority");
 
 
 // Connect to the Mongo DB
