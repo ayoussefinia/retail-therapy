@@ -36,7 +36,8 @@ app.use("/api/users", users);
 // Add routes, both API and view
 app.use(routes);
 
-mongoose.connect("mongodb+srv://ayoussefinia:"+process.env.pass+"@cluster0.uescv.mongodb.net/myFirstDatabase?retryWrites=true&w=majority");
+mongoose.connect("mongodb+srv://ayoussefinia:"+process.env.pass+"@cluster0.uescv.mongodb.net/Store?authSource=admin&retryWrites=true&w=majority").then(() => {console.log('mongodb connected')})
+.catch((err) => {console.log('error connecting to mongoDB: ', err)});
 
 
 // Connect to the Mongo DB
