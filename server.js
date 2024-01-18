@@ -35,7 +35,7 @@ require("./config/passport")(passport);
 app.use("/api/users", users);
 // Add routes, both API and view
 
-mongoose.connect("mongodb+srv://ayoussefinia:"+process.env.pass+"@cluster0.snkzbmi.mongodb.net/?retryWrites=true&w=majority").then(() => {console.log('mongodb connected')})
+mongoose.connect("mongodb+srv://ayoussefinia:"+process.env.pass+"@cluster0.snkzbmi.mongodb.net/Store?authSource=admin&retryWrites=true&w=majority").then(() => {console.log('mongodb connected')})
 .catch((err) => {console.log('error connecting to mongoDB: ', err)});
 
 
