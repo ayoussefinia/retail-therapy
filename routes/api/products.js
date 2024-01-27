@@ -5,6 +5,9 @@ const productsController = require("../../controllers/productsController");
 router.route("/")
   .get(productsController.findAll)
   .post(productsController.create)
+
+// router.route("/products")
+  
   // .post(booksController.create);
 
 router.route("/name/:name")

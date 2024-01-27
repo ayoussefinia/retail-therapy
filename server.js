@@ -33,14 +33,15 @@ app.use(passport.initialize());
 require("./config/passport")(passport);
 // Routes
 app.use("/api/users", users);
+app.use(routes);
 // Add routes, both API and view
-mongoose.connect("mongodb+srv://ayoussefinia:"+process.env.pass+"@cluster0.snkzbmi.mongodb.net/?retryWrites=true&w=majority").then(() => {console.log('mongodb connected')})
+mongoose.connect("mongodb+srv://ayoussefinia:"+process.env.pass+"@cluster0.snkzbmi.mongodb.net/Store?retryWrites=true&w=majority").then(() => {console.log('mongodb connected')})
 .catch((err) => {console.log('error connecting to mongoDB: ', err)});
 
 
 // Connect to the Mongo DB
 // mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/store")
-// .then(() => {console.log('mongodb connected')})
+// .then(() => {console.log('mongodb connected')}) 
 // .catch((err) => {console.log('error connecting to mongoDB: ', err)});
 
 // Start the API server

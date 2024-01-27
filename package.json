@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "engines": {
-    "node": "10.x"
+    "node": "18.x"
   },
   "main": "server.js",
   "scripts": {
@@ -36,10 +36,12 @@
     "if-env": "^1.0.4",
     "is-empty": "^1.2.0",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.8.3",
+    "mongodb": "^2.2.12",
+    "mongoose": "^5.13.22",
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
-    "validator": "^12.1.0"
+    "validator": "^12.1.0",
+    "yarn": "^1.22.21"
   }
 }
